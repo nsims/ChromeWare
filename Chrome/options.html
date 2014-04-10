@@ -1,0 +1,40 @@
+<html>
+<head><title>ChromeFix Options</title></head>
+
+<body style="text-align:center">
+<div style="display: none !important;">
+Favorite Color:
+<select id="color">
+ <option value="red">red</option>
+ <option value="green">green</option>
+ <option value="blue">blue</option>
+ <option value="yellow">yellow</option>
+</select>
+</div>
+<div style="padding-top:50px">
+	<span>
+		Software Login:
+		<input type="text" id="SWLogin">
+	</span>
+</div>
+<div>
+	<span>
+		Software Password:
+		<input type="password" id="SWPwd">
+	</span>
+</div>
+<br>
+<div id="status"></div>
+<button id="save">Save</button>
+</body>
+
+
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script src="options.js"></script>
+<script type="text/javascript" src="/js/crypto/aes.js"></script>
+<script type="text/javascript" src="/js/crypto/lazyCrypt.js"></script>
+<script type="text/javascript" src="/js/crypto/cryptoJSFormatter.js"></script>
+<script type="text/javascript" src="/js/crypto/md5.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+
+</html>

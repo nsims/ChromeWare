@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+
+  "name": "ChromeWare",
+  "description": "This extension provides a tool to log requests",
+  "version": "1.0",
+
+  "permissions": [
+	"activeTab",
+	"tabs",
+	"http://www.google.com/",
+	"http://promethee.enablon.com/",
+	"https://software.enablon.com/*",
+	"https://*.enablon.com/*",
+	"http://*.enablon.com/*"
+  ],
+  "background":{
+	"scripts": ["js/main.js", "js/jquery.js", "js/tabs.js", "js/login.js", "js/crypto/aes.js", "js/crypto/cryptoJSFormatter.js", "js/crypto/lazyCrypt.js", "js/crypto/md5.js", "js/screenshottabs.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://software.enablon.com/*"],
+      "js": ["js/jquery.js"]
+    }
+  ],
+  "options_page": "options.html",
+  "browser_action": {
+    "default_icon": "images/ChromeWareIcon.png",
+    "default_popup": "index.html"
+  },
+  "icons": {"48": "images/ChromeWareIcon.png"}
+}

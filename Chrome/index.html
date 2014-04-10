@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ChromeFix</title>
+
+		<!-- Bootstrap -->
+		<link href="dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/css/main.css" rel="stylesheet">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+		<body>
+			<div id="app">
+				<div class="window-container">
+					<div class="header">
+						<span id ="btn-logout" title="Logout" class="glyphicon glyphicon-log-out logout hide"></span>
+						<span id ="btn-login" title="Login" class="glyphicon glyphicon-log-in logout"></span>
+						<span id="btn-documentation" class="glyphicon glyphicon-info-sign about" value="http://promethee.enablon.com/" title="About"></span>
+					</div>
+					<div id="alert_placeholder">
+					</div>
+					<div id="loginWindow" class="window"> <!-- first button-->
+						<div class="site-wrapper-inner">
+							<div class="cover-container">
+								<div style="padding-top:20px">
+									<img src="images/logo.png" alt="Responsive image">
+								</div>
+								<div style="padding-top:20px">
+									<div class="panel panel-default myLogin">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a >
+												Login to Software
+												</a>
+											</h4>
+										</div>
+										<div id="collapseZero" class="panel-collapse collapse in">
+											<div class="panel-body">
+											  <div class="form-group">
+												<label class="sr-only" for="login">Login</label>
+												<Input name="loginInput" style="color:black" placeholder="Login">
+											  </div>
+											  <div class="form-group">
+												<label class="sr-only" for="Password">Password</label>
+												<Input type="password" name="passwordInput" style="color:black" placeholder="Password">
+											  </div>
+											  <div class="form-group">
+												<label class="sr-only" for="Remember">Remember</label>
+												<Input type="checkbox" name="rememberPWD">
+												<label style="color:black" >Remember credentials</label>
+											  </div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="myLogin form-group">
+											<div class="col-sm-offset-2 col-sm-10">
+												<button id="btn-loginToSW" type="button" value="loginToSoftware" class="btn btn-success myLogin">Log in</button>
+												<button id="btn-cancelLogin" type="button" value="main" class="btn btn-danger">Cancel</button>
+											</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="create-request" class="window"><!-- create a request -->
+						
+						<div class="site-wrapper-inner">
+				
+							<div class="cover-container">
+								
+								<div>
+									<h3>Create Request Form</h3>
+								</div>
+								  
+									
+									<!-- Section 1 (Collapse pane) -->
+									<div>
+									<p style="display:inline">Release:</p>
+									<p id="release" style="display:inline">6.0</p>
+									<p style="display:inline">Build:</p>
+									<p id="build" style="display:inline">4126</p>
+									</div>
+									<p style="display:inline">Application:</p>
+									<p id="application" style="display:inline">Waste</p>
+									<p style="display:inline">AS Build:</p>
+									<p id="asbuild" style="display:inline">431</p>
+									
+									<form style="padding-top: 5px" class="form-inline" role="form">
+										<div class="panel-group" id="accordion">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+														Header
+														</a>
+													</h4>
+												</div>
+												<div id="collapseOne" class="panel-collapse collapse">
+													<div class="panel-body">
+													  <div class="form-group">
+														<label class="sr-only" for="type">Type</label>
+														<select class="form-control" id="type">
+															<option>Bug</option>
+															<option>Enhancement</option>
+															<option>Question</option>
+															<option>Product Opening</option>
+														</select>
+													  </div>
+													  <div class="form-group">
+														<label  class="sr-only" for="severity">Severity</label>
+														<select class="form-control" id="severity" placeholder="Enter Severity">
+															<option>Severe</option>
+															<option>Major</option>
+															<option selected="selected">Minor</option>
+														</select>
+													  </div>
+													  <div class="form-group">
+														<label  class="sr-only" for="priority">Priority</label>
+														<select class="form-control" id="priority" placeholder="Enter Priority">
+															<option>Immediate</option>
+															<option>At the earliest</option>
+															<option selected="selected">Normal</option>
+															<option>Later</option>
+														</select>
+													  </div>
+													</div>
+												</div>
+										    </div>
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+														Description
+														</a>
+													</h4>
+												</div>
+												<div id="collapseTwo" class="panel-collapse collapse">
+													<div class="panel-body">
+													  <div class="form-group">
+														<label class="sr-only" for="title">Title</label>
+														<input type="text" class="form-control" id="title" placeholder="Enter Title" >
+													  </div>
+													  <div class="form-group">
+														<label class="sr-only" for="behavior">Current vs Expected Behavior</label>
+														<textarea type="text" class="form-control" id="behavior" rows="3" placeholder="Enter Current vs Expected Behavior"></textarea>
+													  </div>
+													  <div class="form-group">
+														<label class="sr-only" for="stepstoreproduce">Steps to reproduce</label>
+														<textarea type="text" class="form-control" id="stepstoreproduce" rows="3" placeholder="Enter Steps to reproduce"></textarea>
+													  </div>
+													  <div class="form-group">
+														<label class="sr-only" for="url">URL</label>
+														<input type="text" class="form-control" id="url" placeholder="Enter URL">
+													  </div>
+													  <div class="form-group">
+														<label class="sr-only" for="loginpwd">Login/Password</label>
+														<input type="text" class="form-control" id="loginpwd" placeholder="Enter Login Username/Password">
+													  </div>
+													  <div class="form-group" style="text-align:left !important">
+														<label for="exampleInputFile" style="color:black">File input</label>
+														<input type="file" style="color:black" id="exampleInputFile">
+													  </div>
+													</div>
+												</div>
+										    </div>
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+														Actors
+														</a>
+													</h4>
+												</div>
+												<div id="collapseThree" class="panel-collapse collapse">
+													<div class="panel-body">
+													  <div class="form-group">
+														<label class="sr-only" for="requestto">Request to</label>
+														<input type="text" class="form-control" id="requestto" placeholder="Enter name">
+													  </div>
+													  <div class="form-group">
+														<label class="sr-only" for="followers">Followers</label>
+														<textarea type="text" class="form-control" id="followers" rows="3" placeholder="Enter Followers"></textarea>
+													  </div>
+													  <div class="form-group">
+														<label class="sr-only" for="status">Status</label>
+														<select class="form-control" id="status" placeholder="Enter Status">
+															<option>Open</option>
+															<option>Details Needed</option>
+															<option>Validated for Treatment</option>
+															<option>Treated to be Checked</option>
+															<option>Closed</option>
+														</select>
+													  </div>
+													</div>
+												</div>
+										    </div>
+										</div>
+									
+										<div class="form-group">
+											<div class="col-sm-offset-2 col-sm-10">
+												<button id="btn-create" type="button" class="btn btn-success">Create</button>
+												<button id="btn-cancel" type="button" value="main" class="btn btn-danger" >Cancel</button>
+											</div>
+										</div>  
+									  
+									  
+									</form>
+
+							</div>
+
+						</div>
+						
+					</div>
+					<div id="main" class="window"> <!-- first button-->
+						<div class="site-wrapper-inner">
+							<div class="cover-container">
+								<div style="padding-top:20px">
+									<img src="images/logo.png" alt="Responsive image">
+								</div>
+								<div style="padding-top:40px">
+									<h1>Hello,</h1>
+									<h1 id="user">Guest</h1>
+								</div>
+								<div style="padding-top:5px">
+									<button id="btn-createRequest" type="button" value="create-request" class="btn btn-primary btn-lg">
+										<span class="glyphicon glyphicon-plus-sign"></span>  Create Request
+									</button>
+								</div>
+								<div style="padding:5px">
+									<button id="btn-screenshot" type="button" class="btn btn-warning btn-lg">
+										<span class="glyphicon glyphicon-camera"></span>   Take Screenshot
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="loading" class="window hide">
+						<div class="site-wrapper-inner">
+							<div class="cover-container">
+								<div style="padding-top:150px">
+									<img src="images/loader.gif" alt="Responsive image" height="150px" width="150px">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		
+		
+
+			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+			
+			<script type="text/javascript" src="/js/tabs.js"></script>
+			<script type="text/javascript" src="/js/windows.js"></script>
+			<script type="text/javascript" src="/js/popover.js"></script>
+			<script type="text/javascript" src="/js/sections.js"></script>
+			<script type="text/javascript" src="/js/fields.js"></script>
+			<script src="/js/jquery.js"></script>
+			<!-- Include all compiled plugins (below), or include individual files as needed -->
+			<script src="dist/js/bootstrap.min.js"></script>
+			<script type="text/javascript" src="/js/crypto/aes.js"></script>
+			<script type="text/javascript" src="/js/crypto/lazyCrypt.js"></script>
+			<script type="text/javascript" src="/js/crypto/cryptoJSFormatter.js"></script>
+			<script type="text/javascript" src="/js/crypto/md5.js"></script>
+			<script type="text/javascript" src="/js/login.js"></script>
+			<script type="text/javascript" src="/js/main.js"></script>
+		</body>
+</html>

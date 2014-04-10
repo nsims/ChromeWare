@@ -6,12 +6,25 @@ html,
 body {
   height: 100%;
   background-color: #333;
+  width: 350px;
+  height: 600px;
+  overflow: auto;
 }
 body {
   color: #fff;
   text-align: center;
   box-shadow: inset 0 0 100px rgba(0,0,0,.5);
 }
+
+.window-container .window {
+  display: table;
+  width: 100%;
+  height: 100%; /* For at least Firefox */
+  min-height: 100%;
+    -webkit-transition: .6s ease-in-out left;
+          transition: .6s ease-in-out left;
+}
+
 
 .site-wrapper {
   display: table;
@@ -22,14 +35,12 @@ body {
 .site-wrapper-inner {
   display: table-cell;
   vertical-align: top;
-  padding-right: 25px;
 }
 .cover-container {
-  margin-left: auto;
-  margin-right: auto;
+  padding: 10px;
 }
 .chromefix-tabs {
-  margin-top: 30px;
+  margin-top: 5px;
 }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
@@ -47,6 +58,16 @@ body {
   max-width: 295px;
 }
 
+.hide {
+  display: none !important;
+      -webkit-transition: .6s ease-in-out left;
+          transition: .6s ease-in-out left;
+}
+
+.popover-content {
+  color: black !important;
+}
+
 /* Padding for spacing */
 .inner {
   padding: 30px;
@@ -61,6 +82,10 @@ body {
   color: rgba(255,255,255,.5);
 }
 
+.header {
+  text-align:left;
+}
+
 /*
  * Icons
  */
@@ -68,10 +93,14 @@ body {
 .logout{
   left: 10px;
   top: 10px;
+  text-align:left !important;
+  cursor:pointer;
 }
 .about{
   left: 310px;
   top: 10px;
+  text-align:right !important;
+  cursor:pointer;
 }
 
 
