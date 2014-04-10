@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+
+  "name": "ChromeFix",
+  "description": "This extension provides a tool to log requests",
+  "version": "1.0",
+
+  "permissions": [
+	"tabs",
+	"http://www.google.com/",
+	"http://promethee.enablon.com/",
+	"https://software.enablon.com/"
+  ],
+  "background":{
+  "scripts": ["main.js", "tabs.js", "jquery.js"]
+  },
+  "options_page": "options.html",
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "index.html"
+  }
+}
