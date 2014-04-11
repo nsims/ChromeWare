@@ -72,5 +72,6 @@ function checkRequiredFields()
 	});
 	if(!passed){
 		alert("Following fields must be filled: " + fields);
-	}
+	};
+	return passed;
 }

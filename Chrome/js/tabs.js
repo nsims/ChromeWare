@@ -62,7 +62,7 @@ function createRequest()
 {
 	return function (){	
 		var requiredFilled = checkRequiredFields();
-		if(requireFilled){
+		if(requiredFilled){
 			var urlAppId = "https://software.enablon.com/Software/go.asp?u=/Referent/FFRq&Process=nGetAllElements" +
 						   "&sAppId=" + $("#application").text() + 
 						   "&sAppVersion=" + $("#release").text() + 
