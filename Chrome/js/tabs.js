@@ -60,30 +60,33 @@ function injectJavaScript() {
 
 function createRequest()
 {
-	return function (){		
-		var urlAppId = "https://software.enablon.com/Software/go.asp?u=/Referent/FFRq&Process=nGetAllElements" +
-					   "&sAppId=" + $("#application").text() + 
-					   "&sAppVersion=" + $("#release").text() + 
-					   "&sAppBuild=" + $("#build").text() +
-					   "&sSocleVersion=" + $("#asversion").text() +
-					   "&sSocleBuild=" + $("#asbuild").text();
-		$.ajax({
-            url: urlAppId,
-			type: 'GET',
-			timeout: 5000,
-			cache: false,
-			success: function(data, textStatus, jqXHR){
-				var productId = $('#nGetProduct', data).text();
-				var productBuildId = $('#nGetProductBuild', data).text();
-				var socleBuildId = $('#nGetSocleBuild', data).text();
-				console.log("productId: " + productId);
-				var newURL = reqUrl + "&fid=" + productId + "&Fld__xml_BuildProduct=" + productBuildId + "&Fld__xml_BuildSocle=" + socleBuildId + "&ext=1";
-				chrome.tabs.create({ url: newURL });
-				},
-			error: function(jqXHR, textStatus, errorThrown){
-				alert("error");
-			}
-			});
+	return function (){	
+		var requiredFilled = checkRequiredFields();
+		if(requireFilled){
+			var urlAppId = "https://software.enablon.com/Software/go.asp?u=/Referent/FFRq&Process=nGetAllElements" +
+						   "&sAppId=" + $("#application").text() + 
+						   "&sAppVersion=" + $("#release").text() + 
+						   "&sAppBuild=" + $("#build").text() +
+						   "&sSocleVersion=" + $("#asversion").text() +
+						   "&sSocleBuild=" + $("#asbuild").text();
+			$.ajax({
+				url: urlAppId,
+				type: 'GET',
+				timeout: 5000,
+				cache: false,
+				success: function(data, textStatus, jqXHR){
+					var productId = $('#nGetProduct', data).text();
+					var productBuildId = $('#nGetProductBuild', data).text();
+					var socleBuildId = $('#nGetSocleBuild', data).text();
+					console.log("productId: " + productId);
+					var newURL = reqUrl + "&fid=" + productId + "&Fld__xml_BuildProduct=" + productBuildId + "&Fld__xml_BuildSocle=" + socleBuildId + "&ext=1";
+					chrome.tabs.create({ url: newURL });
+					},
+				error: function(jqXHR, textStatus, errorThrown){
+					alert("error");
+				}
+				});
+		}
 		//chrome.tabs.create({ url: reqUrl });
 	}
 

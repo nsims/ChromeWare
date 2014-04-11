@@ -98,7 +98,7 @@
 									<form style="padding-top: 5px" class="form-inline" role="form">
 										<div class="panel-group" id="accordion">
 											<div class="panel panel-default">
-												<div class="panel-heading">
+												<div class="panel-heading" style="padding:3px !important">
 													<h4 class="panel-title">
 														<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 														Header
@@ -109,7 +109,7 @@
 													<div class="panel-body">
 													  <div class="form-group">
 														<label class="sr-only" for="type">Type</label>
-														<select class="form-control" id="type">
+														<select class="form-control input-sm" id="type">
 															<option>Bug</option>
 															<option>Enhancement</option>
 															<option>Question</option>
@@ -118,7 +118,7 @@
 													  </div>
 													  <div class="form-group">
 														<label  class="sr-only" for="severity">Severity</label>
-														<select class="form-control" id="severity" placeholder="Enter Severity">
+														<select class="form-control input-sm" id="severity" placeholder="Enter Severity">
 															<option>Severe</option>
 															<option>Major</option>
 															<option selected="selected">Minor</option>
@@ -126,7 +126,7 @@
 													  </div>
 													  <div class="form-group">
 														<label  class="sr-only" for="priority">Priority</label>
-														<select class="form-control" id="priority" placeholder="Enter Priority">
+														<select class="form-control input-sm" id="priority" placeholder="Enter Priority">
 															<option>Immediate</option>
 															<option>At the earliest</option>
 															<option selected="selected">Normal</option>
@@ -137,7 +137,7 @@
 												</div>
 										    </div>
 											<div class="panel panel-default">
-												<div class="panel-heading">
+												<div class="panel-heading" style="padding:3px !important">
 													<h4 class="panel-title">
 														<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
 														Description
@@ -148,23 +148,23 @@
 													<div class="panel-body">
 													  <div class="form-group">
 														<label class="sr-only" for="title">Title</label>
-														<input type="text" class="form-control" id="title" placeholder="Enter Title" >
+														<input type="text" class="form-control input-sm" id="title" placeholder="Enter Title" required >
 													  </div>
 													  <div class="form-group">
 														<label class="sr-only" for="behavior">Current vs Expected Behavior</label>
-														<textarea type="text" class="form-control" id="behavior" rows="3" placeholder="Enter Current vs Expected Behavior"></textarea>
+														<textarea type="text" class="form-control input-sm" id="behavior" rows="3" placeholder="Enter Current vs Expected Behavior"></textarea>
 													  </div>
 													  <div class="form-group">
 														<label class="sr-only" for="stepstoreproduce">Steps to reproduce</label>
-														<textarea type="text" class="form-control" id="stepstoreproduce" rows="3" placeholder="Enter Steps to reproduce"></textarea>
+														<textarea type="text" class="form-control input-sm" id="stepstoreproduce" rows="3" placeholder="Enter Steps to reproduce" required></textarea>
 													  </div>
 													  <div class="form-group">
 														<label class="sr-only" for="url">URL</label>
-														<input type="text" class="form-control" id="url" placeholder="Enter URL">
+														<input type="text" class="form-control input-sm" id="url" placeholder="Enter URL" required>
 													  </div>
 													  <div class="form-group">
 														<label class="sr-only" for="loginpwd">Login/Password</label>
-														<input type="text" class="form-control" id="loginpwd" placeholder="Enter Login Username/Password">
+														<input type="text" class="form-control input-sm" id="loginpwd" placeholder="Enter Login Username/Password" required>
 													  </div>
 													  <div class="form-group" style="text-align:left !important">
 														<label for="exampleInputFile" style="color:black">File input</label>
@@ -173,7 +173,8 @@
 													</div>
 												</div>
 										    </div>
-											<div class="panel panel-default">
+											<!--Hiding this Actors section -->
+											<div class="panel panel-default hide">
 												<div class="panel-heading">
 													<h4 class="panel-title">
 														<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">

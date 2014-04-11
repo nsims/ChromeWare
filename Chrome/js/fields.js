@@ -48,3 +48,29 @@ function fillDefaultValues()
 		$("#status").val("Open");		
 	}
 }
+
+function checkRequiredFields()
+{
+	var formField = ".form-control";
+	var passed = true;
+	var fields = "";
+	$(formField).each(function() {
+		var fieldId = $(this).attr('id');
+		var requiredBool = $('#' + fieldId).attr('required');
+		if(requiredBool){
+			if($('#' + fieldId).val() == "" || $('#' + fieldId).val() == null){
+				passed = false;
+				$(this).parent().addClass('has-error');
+				if(fields=="")
+					fields = $('#' + fieldId).siblings().text();
+				else
+					fields = fields + ", " + $('#' + fieldId).siblings().text();
+			}
+			else
+				$(this).parent().removeClass('has-error');
+		}
+	});
+	if(!passed){
+		alert("Following fields must be filled: " + fields);
+	}
+}
