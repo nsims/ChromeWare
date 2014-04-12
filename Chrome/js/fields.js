@@ -33,7 +33,8 @@ function clearFields()
 			var fieldId = $(this).attr('id');
 			$(this).val("");
 			localStorage.removeItem("CW-" + fieldId);
-		})
+		});
+		removeValidation();
 	}
 }
 
@@ -60,7 +61,8 @@ function checkRequiredFields()
 		if(requiredBool){
 			if($('#' + fieldId).val() == "" || $('#' + fieldId).val() == null){
 				passed = false;
-				$(this).parent().addClass('has-error');
+				$(this).parent().addClass('has-error has-feedback');
+				$(this).parent().append('<span class="glyphicon glyphicon-remove form-control-feedback" style="top:0px !important;"></span>');
 				if(fields=="")
 					fields = $('#' + fieldId).siblings().text();
 				else
@@ -71,7 +73,22 @@ function checkRequiredFields()
 		}
 	});
 	if(!passed){
+		if(!$('#sectionerror').length){
+			$('a[href="#collapseTwo"]').append('<span id="sectionerror" class="glyphicon glyphicon-remove form-control-feedback" style="top:2px !important; color: #a94442;"></span>');
+		}
 		alert("Following fields must be filled: " + fields);
 	};
 	return passed;
+}
+
+function removeValidation()
+{
+	var formField = ".form-control";
+	var passed = true;
+	var fields = "";
+	$(formField).each(function() {
+		$(this).parent().removeClass('has-error');
+	});
+	$('#sectionerror').remove();
+	
 }

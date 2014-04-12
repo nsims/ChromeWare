@@ -73,6 +73,10 @@ body {
   padding: 30px;
 }
 
+.has-error .form-control {
+	border-width:medium;
+}
+
 /*
  * Footer
  */

@@ -44,11 +44,12 @@ function injectJavaScript() {
 						case "Normal": var priority = "2"; break;
 						case "Later": var priority = "3"; break;
 						default: var priority = "2"};
+		var behavior = localStorage.getItem("CW-behavior")?localStorage.getItem("CW-behavior"):"";
 		var input = 'var type = "' + type + '";' +
 					' var severity = "' + severity + '";' +
 					' var priority = "' + priority + '";' +
 					' var title = "' + localStorage.getItem("CW-title") + '";' +
-					' var behavior = "' + localStorage.getItem("CW-behavior") + '";' +
+					' var behavior = "' + behavior + '";' +
 					' var stepstoreproduce = "' + localStorage.getItem("CW-stepstoreproduce") + '";' +
 					' var url = "' + localStorage.getItem("CW-url") + '";' +
 					' var loginpwd = "' + localStorage.getItem("CW-loginpwd") + '";';
