@@ -24,6 +24,7 @@ function main()
 	dynamicPopover();
 	fillFields();
 	rememberFields();
+	getVersionInfo();
 	
 	//Set up button actions
 	document.getElementById("btn-documentation").addEventListener('click', newTab("btn-documentation"));
