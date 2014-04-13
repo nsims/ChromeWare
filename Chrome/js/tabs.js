@@ -70,6 +70,7 @@ function createRequest()
 						   "&sAppBuild=" + $("#build").text() +
 						   "&sSocleVersion=" + $("#asversion").text() +
 						   "&sSocleBuild=" + $("#asbuild").text();
+			$('#loading').show();
 			$.ajax({
 				url: urlAppId,
 				type: 'GET',
