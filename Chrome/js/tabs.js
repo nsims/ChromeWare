@@ -44,16 +44,41 @@ function injectJavaScript() {
 						case "Normal": var priority = "2"; break;
 						case "Later": var priority = "3"; break;
 						default: var priority = "2"};
-		var behavior = localStorage.getItem("CW-behavior")?localStorage.getItem("CW-behavior"):"";
+		//var behavior = localStorage.getItem("CW-behavior")?localStorage.getItem("CW-behavior"):"";
+		//var matches = test.replace(/\n/g, "§");
+		var behavior = localStorage.getItem("CW-behavior");
+		var stepstoreproduce = localStorage.getItem("CW-stepstoreproduce");
 		var input = 'var type = "' + type + '";' +
 					' var severity = "' + severity + '";' +
 					' var priority = "' + priority + '";' +
 					' var title = "' + localStorage.getItem("CW-title") + '";' +
-					' var behavior = "' + behavior + '";' +
-					' var stepstoreproduce = "' + localStorage.getItem("CW-stepstoreproduce") + '";' +
+					' var behavior = "' + behavior.replace(/\n/g, "&sect;") + '";' +
+					' var stepstoreproduce = "' + stepstoreproduce.replace(/\n/g, "&sect;") + '";' +
 					' var url = "' + localStorage.getItem("CW-url") + '";' +
 					' var loginpwd = "' + localStorage.getItem("CW-loginpwd") + '";';
 					
+					
+		//figure out how to call these in the different files
+		//clear fields
+		localStorage.removeItem("CW-type");		
+		localStorage.removeItem("CW-severity");		
+		localStorage.removeItem("CW-priority");		
+		localStorage.removeItem("CW-behavior");		
+		localStorage.removeItem("CW-title");		
+		localStorage.removeItem("CW-stepstoreproduce");		
+		localStorage.removeItem("CW-url");		
+		localStorage.removeItem("CW-loginpwd");	
+		//reset section
+		$('#collapseOne').addClass('in');
+		$('#collapseOne').css({height: 'auto'});
+		$('#collapseTwo').removeClass('in');
+		$('#collapseTwo').css({height: '0px'});
+		$('#collapseThree').removeClass('in');
+		$('#collapseThree').css({height: '0px'});
+		localStorage.setItem("CF-lastsection", 'collapseOne');	
+		//reset window
+		localStorage.setItem("CF-lastwindow", "main");
+		
 		chrome.tabs.executeScript(tab.id, {code: input} );
 		chrome.tabs.executeScript(tab.id, {file: 'js/fillRequest.js'});
 	});
