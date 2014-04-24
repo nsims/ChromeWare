@@ -71,4 +71,9 @@ function loadLastWindow()
 			}
 		}
 	}
+	else{
+		$('#main').show();
+		$('#loading').hide();
+		localStorage.setItem("CF-lastwindow", "main");
+	}
 }
