@@ -23,17 +23,25 @@ function loadLastSection()
 	{
 		$('#'+ sectionId).collapse({parent: "#accordion"})
 	}
+	else{
+		resetSectionCallback();
+	}
 }
 
 function resetSection()
 {
 	return function () {
-		$('#collapseOne').addClass('in');
-		$('#collapseOne').css({height: 'auto'});
-		$('#collapseTwo').removeClass('in');
-		$('#collapseTwo').css({height: '0px'});
-		$('#collapseThree').removeClass('in');
-		$('#collapseThree').css({height: '0px'});
-		localStorage.setItem("CF-lastsection", 'collapseOne');
+		resetSectionCallback();
 	}
+}
+
+function resetSectionCallback()
+{
+	$('#collapseOne').addClass('in');
+	$('#collapseOne').css({height: 'auto'});
+	$('#collapseTwo').removeClass('in');
+	$('#collapseTwo').css({height: '0px'});
+	$('#collapseThree').removeClass('in');
+	$('#collapseThree').css({height: '0px'});
+	localStorage.setItem("CF-lastsection", 'collapseOne');
 }
