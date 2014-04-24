@@ -11,7 +11,7 @@ function main()
 	$('#create-request').hide();
 	//$('#main').hide();
 	$('#loginWindow').hide();
-	
+	$('#loading').hide();
 	injectJavaScript();
 	loadLastWindow();
 	var logger = new Logger();
