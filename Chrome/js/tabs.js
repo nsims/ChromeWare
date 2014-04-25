@@ -4,6 +4,8 @@
 
 
 var reqUrl = "https://software.enablon.com/Software/go.asp?u=/Referent/Prods/RqProd&tm=1";
+var appBuild = '';
+var asBuild = '';
 
 function newTab(id)
 {
@@ -47,6 +49,16 @@ function injectJavaScript() {
 		//var behavior = localStorage.getItem("CW-behavior")?localStorage.getItem("CW-behavior"):"";
 		//var matches = test.replace(/\n/g, "§");
 		var behavior = localStorage.getItem("CW-behavior");
+		var appBuild = localStorage.getItem("CW-appBuild");
+		var asBuild = localStorage.getItem("CW-asBuild");
+		var asVersion = localStorage.getItem("CW-appVersion");
+		if(appBuild != null && asBuild != null){
+			behavior = behavior + "\n\n\n\n--------------------\n\n";
+			if(asVersion != null){
+				behavior = behavior + "Product: " + asVersion + "\n";
+			};
+			behavior = behavior + "Product Build: " + appBuild + "\nAS Build: " + asBuild;
+		}
 		var stepstoreproduce = localStorage.getItem("CW-stepstoreproduce");
 		var input = 'var type = "' + type + '";' +
 					' var severity = "' + severity + '";' +
@@ -59,6 +71,9 @@ function injectJavaScript() {
 					
 					
 		//figure out how to call these in the different files
+		localStorage.removeItem("CW-appBuild");
+		localStorage.removeItem("CW-asBuild");
+		localStorage.removeItem("CW-appVersion");
 		//clear fields
 		localStorage.removeItem("CW-type");		
 		localStorage.removeItem("CW-severity");		
@@ -95,6 +110,7 @@ function createRequest()
 						   "&sAppBuild=" + $("#build").text() +
 						   "&sSocleVersion=" + $("#asversion").text() +
 						   "&sSocleBuild=" + $("#asbuild").text();
+			var sAppId = $("#application").text() + " " + $("#release").text();
 			$('#loading').show();
 			$.ajax({
 				url: urlAppId,
@@ -105,10 +121,31 @@ function createRequest()
 					var productId = $('#nGetProduct', data).text();
 					var productBuildId = $('#nGetProductBuild', data).text();
 					var socleBuildId = $('#nGetSocleBuild', data).text();
-					console.log("productId: " + productId);
-					var newURL = reqUrl + "&fid=" + productId + "&Fld__xml_BuildProduct=" + productBuildId + "&Fld__xml_BuildSocle=" + socleBuildId + "&ext=1";
+					
+					if(productId.trim() != ""){
+						var newURL = 	reqUrl + 
+										"&fid=" + productId + 
+										"&Fld__xml_BuildProduct=" + productBuildId + 
+										"&Fld__xml_BuildSocle=" + socleBuildId + 
+										"&ext=1";
+					}
+					else{
+						var nAppId = applicationMapping(sAppId);
+						if(nAppId == null){
+							var newURL = 	"https://software.enablon.com/Software/go.asp?u=/Referent/Rqtes&pm=0&tm=1";
+							if(sAppId != null){
+								localStorage.setItem("CW-appVersion", sAppId);
+							}
+						}
+						else{
+							var newURL = reqUrl + "&fid=" + nAppId;
+						};
+						localStorage.setItem("CW-appBuild", $("#build").text());
+						localStorage.setItem("CW-asBuild", $("#asbuild").text());
+					}
+					
 					chrome.tabs.create({ url: newURL });
-					},
+				},
 				error: function(jqXHR, textStatus, errorThrown){
 					alert("error");
 				}

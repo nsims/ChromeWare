@@ -1,6 +1,47 @@
 // Adapted by Nathan Sims 
 // from RetrieveAppInfo.js by the FireFix team
 
+function applicationMapping(sAppId) {
+	switch(sAppId){
+		case "AQS 6.0":
+			var ret = 343;
+			break;
+		case "AQS 7.0":
+			var ret = 282;
+			break;
+		case "Waste 6.0":
+			var ret = 351;
+			break;
+		case "Waste 7.0":
+			var ret = 388;
+			break;
+		case "RCM 6.0":
+			var ret = 344;
+			break;
+		case "RCM 7.0":
+			var ret = 375;
+			break;
+		case "ACS 6.0":
+			var ret = 383;
+			break;
+		case "ACS 7.0":
+			var ret = 414;
+			break;
+		case "CMS 6.0":
+			var ret = 350;
+			break;
+		case "CMS 7.0":
+			var ret = 415;
+			break;
+		default:
+			var ret = null;
+			break;
+	};
+	return ret;
+
+}
+
+
 function getVersionInfo() {
 
 	/* General Variables */
