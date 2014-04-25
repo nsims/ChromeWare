@@ -4,13 +4,9 @@
 
 
 var reqUrl = "https://software.enablon.com/Software/go.asp?u=/Referent/Prods/RqProd&tm=1";
-<<<<<<< HEAD
-var index = 1;
-=======
 var appBuild = '';
 var asBuild = '';
 
->>>>>>> d6a4ce9131002e62e53873f432acfd9e3b7d0fd3
 function newTab(id)
 {
 	return function () {
@@ -86,8 +82,7 @@ function injectJavaScript() {
 		localStorage.removeItem("CW-title");		
 		localStorage.removeItem("CW-stepstoreproduce");		
 		localStorage.removeItem("CW-url");		
-		localStorage.removeItem("CW-loginpwd");
-		
+		localStorage.removeItem("CW-loginpwd");	
 		//reset section
 		$('#collapseOne').addClass('in');
 		$('#collapseOne').css({height: 'auto'});
@@ -165,18 +160,16 @@ function takeScreenshot() {
   chrome.tabs.captureVisibleTab(null, function(img) {
     var screenshotUrl = img;
 	var viewTabUrl = chrome.extension.getURL('screenshot.html');
-	var filename = localStorage.getItem("CW-filename");	
-	document.getElementById('details').innerHTML +=index + ": " + filename + '.jpg <br>';
-	var imgUrl = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');		
-	var link = document.createElement("a");	
-	link.download = filename + ".jpg";
+	var imgUrl = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+	var link = document.createElement("a");
+	link.download = viewTabUrl + ".jpg";
 	link.href = imgUrl;
-	link.click();
-    index++;	
+	link.click();	
+	
+
   });
 }
 
-
 function clickHandler(e){	
-	setTimeout(takeScreenshot, 1000);	
+	setTimeout(takeScreenshot, 1000);
 }
