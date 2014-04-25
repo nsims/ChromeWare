@@ -108,8 +108,9 @@ function createRequest()
 						   "&sAppId=" + $("#application").text() + 
 						   "&sAppVersion=" + $("#release").text() + 
 						   "&sAppBuild=" + $("#build").text() +
-						   "&sSocleVersion=" + $("#asversion").text() +
+						   "&sSocleVersion=" + encodeURIComponent($("#asversion").text()) +
 						   "&sSocleBuild=" + $("#asbuild").text();
+			console.log("urlAppId: " + urlAppId);
 			var sAppId = $("#application").text() + " " + $("#release").text();
 			$('#loading').show();
 			$.ajax({
@@ -144,7 +145,7 @@ function createRequest()
 						localStorage.setItem("CW-asBuild", $("#asbuild").text());
 					}
 					
-					chrome.tabs.create({ url: newURL });
+					//chrome.tabs.create({ url: newURL });
 				},
 				error: function(jqXHR, textStatus, errorThrown){
 					alert("error");

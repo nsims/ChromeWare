@@ -1,7 +1,6 @@
 // Written by Nathan Sims 
 // inspired by RetrieveAppInfo.js by the FireFix team
 
-<<<<<<< HEAD
 function applicationMapping(sAppId) {
 	switch(sAppId){
 		case "AQS 6.0":
@@ -42,85 +41,71 @@ function applicationMapping(sAppId) {
 
 }
 
-
-function getVersionInfo() {
-
-	/* General Variables */
-	var sAppId,
-		sAppVersion,
-		sAppBuild;
-		
-	var sVersioningMode,
-		nVersioningLength;
-		
-	var asElementList = new Array();
-=======
 function mapAppIdToModuleName(appId) {
 	// Hardcoded for now, since the VPACK elements of the version 
 	// page are simply bold text with no mapping tools available
 	switch(appId) {
 		case "rc":
-			return "RCM";
-			break;
+						return "RCM";
+						break;
 		case "ho":
-			return "HO";
-			break;
+						return "HO";
+						break;
 		case "PY":
-			return "PYPKG";
-			break;
+						return "PYPKG";
+						break;
 		case "ra":
-			return "RM";
-			break;
+						return "RM";
+						break;
 		case "ch":
-			return "CMS";
-			break;
+						return "CMS";
+						break;
 		case "AE":
-			return "AQS";
-			break;
+						return "AQS";
+						break;
 		case "WA":
-			return "Waste";
-			break;
+						return "Waste";
+						break;
 		case "ims":
-			return "EMS";
-			break;
+						return "EMS";
+						break;
 		case "sd":
-			return "SD";
-			break;
+						return "SD";
+						break;
 		case "CR":
-			return "CSR";
-			break;
+						return "CSR";
+						break;
 		case "MC":
-			return "MoC";
-			break;
+						return "MoC";
+						break;
 		case "tp":
-			return "Prof";
-			break;
+						return "Prof";
+						break;
 		case "acs":
-			return "ACS";
-			break;
+						return "ACS";
+						break;
 		case "ic":
-			return "IC";
-			break;
+						return "IC";
+						break;
 		case "ca":
-			return "CA";
-			break;
+						return "CA";
+						break;
 		case "AP":
-			return "AP_Pkg";
-			break;
+						return "AP_Pkg";
+						break;
 		case "IA":
-			return "IA";
-			break;
+						return "IA";
+						break;
 		case "bc":
-			return "BCM";
-			break;
+						return "BCM";
+						break;
 		case "fw":
-			return "Wizframe";
-			break;
+						return "Wizframe";
+						break;
 		default:
-			return ""
+						return ""
 	}
 }
->>>>>>> da95446b09312fa088fc4e912d1aa58696d2b967
 
 function processAppBuildInfo(appVerPageUrl, appId) {
 	// Process content from application version page
@@ -182,7 +167,7 @@ function getVersionInfo() {
 	
 	chrome.tabs.query({active: true, currentWindow: true}, 
 		function(tabs){ 
-		
+                                
 			// Get URL of current page
 			thisURL = tabs[0].url;
 			
@@ -195,7 +180,7 @@ function getVersionInfo() {
 			
 			// Check to make sure this is an enablon site before ajax calls
 			if(domain.indexOf("enablon") == -1) {
-				return
+							return
 			}
 			
 			// Determine URLs of version pages for this site
@@ -211,13 +196,13 @@ function getVersionInfo() {
 			
 			// if(nVersioningLength >= 1) { sVersioningMode = '.VPACK b'; }
 			// else {
-				// nVersioningLength = $('.VMOD b').length;
-				// if($('.VMOD b').length >= 1) { sVersioningMode = '.VMOD b'; }
-				// else {
-					// nVersioningLength = $('.VAPP b').length;
-					// if($('.VAPP b').length >= 1) { sVersioningMode = '.VAPP b'; }
-					// else { sVersioningMode = '.ERROR b'; }
-				// }
+							// nVersioningLength = $('.VMOD b').length;
+							// if($('.VMOD b').length >= 1) { sVersioningMode = '.VMOD b'; }
+							// else {
+											// nVersioningLength = $('.VAPP b').length;
+											// if($('.VAPP b').length >= 1) { sVersioningMode = '.VAPP b'; }
+											// else { sVersioningMode = '.ERROR b'; }
+							// }
 			// }
 		}
 	); //end chrome.tabs.query function
