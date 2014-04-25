@@ -46,64 +46,64 @@ function mapAppIdToModuleName(appId) {
 	// page are simply bold text with no mapping tools available
 	switch(appId) {
 		case "rc":
-						return "RCM";
-						break;
+			return "RCM";
+			break;
 		case "ho":
-						return "HO";
-						break;
+			return "HO";
+			break;
 		case "PY":
-						return "PYPKG";
-						break;
+			return "PYPKG";
+			break;
 		case "ra":
-						return "RM";
-						break;
+			return "RM";
+			break;
 		case "ch":
-						return "CMS";
-						break;
+			return "CMS";
+			break;
 		case "AE":
-						return "AQS";
-						break;
+			return "AQS";
+			break;
 		case "WA":
-						return "Waste";
-						break;
+			return "Waste";
+			break;
 		case "ims":
-						return "EMS";
-						break;
+			return "EMS";
+			break;
 		case "sd":
-						return "SD";
-						break;
+			return "SD";
+			break;
 		case "CR":
-						return "CSR";
-						break;
+			return "CSR";
+			break;
 		case "MC":
-						return "MoC";
-						break;
+			return "MoC";
+			break;
 		case "tp":
-						return "Prof";
-						break;
+			return "Prof";
+			break;
 		case "acs":
-						return "ACS";
-						break;
+			return "ACS";
+			break;
 		case "ic":
-						return "IC";
-						break;
+			return "IC";
+			break;
 		case "ca":
-						return "CA";
-						break;
+			return "CA";
+			break;
 		case "AP":
-						return "AP_Pkg";
-						break;
+			return "AP_Pkg";
+			break;
 		case "IA":
-						return "IA";
-						break;
+			return "IA";
+			break;
 		case "bc":
-						return "BCM";
-						break;
+			return "BCM";
+			break;
 		case "fw":
-						return "Wizframe";
-						break;
+			return "Wizframe";
+			break;
 		default:
-						return ""
+			return ""
 	}
 }
 
@@ -123,7 +123,7 @@ function processAppBuildInfo(appVerPageUrl, appId) {
 					var strippedAppElement = appElement.slice(1, appElement.indexOf(']'));
 					var appElementPieces = strippedAppElement.split(" ");
 					shortClassName = appElementPieces[0];
-					//TODO: figure out this condition for real
+					
 					if(shortClassName === mapAppIdToModuleName(appId)) {
 						$('#application').html(shortClassName);
 						var releaseAndBuild = appElementPieces[1];
@@ -132,7 +132,8 @@ function processAppBuildInfo(appVerPageUrl, appId) {
 						buildNo = appBuildPieces[2];
 					}
 				};
-				
+				console.log('release = ' + release);
+				console.log('buildNo = ' + buildNo);
 				$('#release').html(release);
 				$('#build').html(buildNo);
 			}
@@ -154,7 +155,7 @@ function processASBuildInfo(ASVerPageUrl) {
 				var asRelease = data.substring(startIndex, buildIndex - 1);
 				$('#asversion').html(asRelease);
 				
-				var asBuild = data.substring(buildIndex + 6, data.length);
+				var asBuild = data.substring(buildIndex + 6, data.indexOf("<div"));
 				$('#asbuild').html(asBuild);
 			}
 		}
@@ -175,34 +176,51 @@ function getVersionInfo() {
 			var domain = urlPieces[2];
 			var serverVer = urlPieces[3];
 			var siteId = urlPieces[4];
+			var aspQueryStart = urlPieces[5];
 			var appId = urlPieces[6];
 			var pageId = urlPieces[7];
 			
+			console.log(urlPieces);
 			// Check to make sure this is an enablon site before ajax calls
 			if(domain.indexOf("enablon") == -1) {
-							return
+				return
 			}
 			
 			// Determine URLs of version pages for this site
 			var basicSiteUrlPieces = urlPieces.slice(0, 6);
 			var verPageUrlStub = basicSiteUrlPieces.join("/");
+			
+			//Many pages when you first log in have no "go.asp" in the URL
+			//but we need that, so we'll process it like it does have it.
+			if(aspQueryStart == "" || aspQueryStart == null){
+				switch (serverVer) {
+					case "Bespin":
+						aspQueryStart = "go.aspx?u=";
+						break;
+					case "Coruscant":
+						aspQueryStart = "go.aspx?u=";
+						break;
+					
+					default:
+						aspQueryStart = "go.asp?u=";
+				}
+				verPageUrlStub = verPageUrlStub + aspQueryStart
+			}
 			var appVerPageUrl = verPageUrlStub + '/ver';
 			var ASVerPageUrl = verPageUrlStub + 'ver';
-			
-			
 			
 			processAppBuildInfo(appVerPageUrl, appId);
 			processASBuildInfo(ASVerPageUrl);
 			
 			// if(nVersioningLength >= 1) { sVersioningMode = '.VPACK b'; }
 			// else {
-							// nVersioningLength = $('.VMOD b').length;
-							// if($('.VMOD b').length >= 1) { sVersioningMode = '.VMOD b'; }
-							// else {
-											// nVersioningLength = $('.VAPP b').length;
-											// if($('.VAPP b').length >= 1) { sVersioningMode = '.VAPP b'; }
-											// else { sVersioningMode = '.ERROR b'; }
-							// }
+				// nVersioningLength = $('.VMOD b').length;
+				// if($('.VMOD b').length >= 1) { sVersioningMode = '.VMOD b'; }
+				// else {
+					// nVersioningLength = $('.VAPP b').length;
+					// if($('.VAPP b').length >= 1) { sVersioningMode = '.VAPP b'; }
+					// else { sVersioningMode = '.ERROR b'; }
+				// }
 			// }
 		}
 	); //end chrome.tabs.query function
