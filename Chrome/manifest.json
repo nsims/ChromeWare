@@ -15,7 +15,7 @@
 	"http://*.enablon.com/*"
   ],
   "background":{
-	"scripts": ["js/main.js", "js/jquery.js", "js/tabs.js", "js/login.js", "js/crypto/aes.js", "js/crypto/cryptoJSFormatter.js", "js/crypto/lazyCrypt.js", "js/crypto/md5.js", "js/screenshottabs.js"]
+	"scripts": ["js/main.js", "js/jquery.js", "js/tabs.js", "js/login.js", "js/crypto/aes.js", "js/crypto/cryptoJSFormatter.js", "js/crypto/lazyCrypt.js", "js/crypto/md5.js", "js/screenshottabs.js", "js/getVersionInfo.js"]
   },
   "content_scripts": [
     {
