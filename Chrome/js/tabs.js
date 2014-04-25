@@ -145,7 +145,7 @@ function createRequest()
 						localStorage.setItem("CW-asBuild", $("#asbuild").text());
 					}
 					
-					//chrome.tabs.create({ url: newURL });
+					chrome.tabs.create({ url: newURL });
 				},
 				error: function(jqXHR, textStatus, errorThrown){
 					alert("error");
