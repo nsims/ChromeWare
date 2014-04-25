@@ -31,7 +31,7 @@
 						<div class="site-wrapper-inner">
 							<div class="cover-container">
 								<div style="padding-top:20px">
-									<img src="images/logo.png" alt="Responsive image">
+									<img src="images/logo.png" alt="Responsive image" name="softwareImage" >
 								</div>
 								<div style="padding-top:20px">
 									<div class="panel panel-default myLogin">
@@ -67,6 +67,9 @@
 												<button id="btn-cancelLogin" type="button" value="main" class="btn btn-danger">Cancel</button>
 											</div>
 								</div>
+								<div class="mastfoot">
+									<p style="text-align:center">Brought to you by <a href="#">Enablon</a></p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -82,18 +85,19 @@
 								  
 									
 									<!-- Section 1 (Collapse pane) -->
+									<div id="load-app-info" style="display:none"></div>
 									<div>
 									<p style="display:inline">Application:</p>
-									<p id="application" style="display:inline">Waste</p>
+									<p id="application" style="display:inline"></p>
 									<p style="display:inline">| Release:</p>
-									<p id="release" style="display:inline">6.0</p>
+									<p id="release" style="display:inline"></p>
 									<p style="display:inline">| Build:</p>
-									<p id="build" style="display:inline">4126</p>
+									<p id="build" style="display:inline"></p>
 									</div>
 									<p style="display:inline">AS Version:</p>
-									<p id="asversion" style="display:inline">6.0-7 UNSTABLE</p>
+									<p id="asversion" style="display:inline"></p>
 									<p style="display:inline">| AS Build:</p>
-									<p id="asbuild" style="display:inline">5292</p>
+									<p id="asbuild" style="display:inline"></p>
 									
 									<form style="padding-top: 5px" class="form-inline" role="form">
 										<div class="panel-group" id="accordion">
@@ -224,10 +228,12 @@
 									  
 									  
 									</form>
-
+									<div class="mastfoot">
+										<p style="text-align:center">Brought to you by <a href="#">Enablon</a></p>
+									</div>
 							</div>
 
-						</div>
+						</div>	
 						
 					</div>
 					<div id="main" class="window"> <!-- first button-->
@@ -252,6 +258,9 @@
 									</button>
 								</div>
 								-->
+								<div class="mastfoot">
+									<p style="text-align:center">Brought to you by <a href="#">Enablon</a></p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -264,11 +273,11 @@
 							</div>
 						</div>
 					</div>
+					
 				</div>
 				</div>
+				
 			</div>
-		
-		
 
 			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 			
@@ -286,5 +295,6 @@
 			<script type="text/javascript" src="/js/crypto/md5.js"></script>
 			<script type="text/javascript" src="/js/login.js"></script>
 			<script type="text/javascript" src="/js/main.js"></script>
+			<script type="text/javascript" src="/js/getVersionInfo.js"></script>
 		</body>
 </html>
