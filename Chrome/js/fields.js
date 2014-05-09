@@ -22,6 +22,13 @@ function fillFields()
 				$(this).val(fieldValue);
 			}
 		});
+
+		$('#release').html(localStorage.getItem("CW-release"));
+		$('#build').html(localStorage.getItem("CW-build"));
+		$('#application').html(localStorage.getItem("CW-application"));
+
+		$('#asbuild').html(localStorage.getItem("CW-asBuild"));
+		$('#asversion').html(localStorage.getItem("CW-asRelease"));
 	});
 }
 
@@ -35,7 +42,19 @@ function clearFields()
 			localStorage.removeItem("CW-" + fieldId);
 		});
 		removeValidation();
-	}
+
+		$('#release').html("");
+		$('#build').html("");
+		$('#application').html("");
+		$('#asbuild').html("");
+		$('#asversion').html("");
+
+		localStorage.removeItem("CW-release");
+		localStorage.removeItem("CW-build");
+		localStorage.removeItem("CW-application");
+		localStorage.removeItem("CW-asBuild");
+		localStorage.removeItem("CW-asRelease");
+	};
 }
 
 function fillDefaultValues()

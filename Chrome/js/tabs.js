@@ -1,35 +1,80 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// ChromWare Team - Enablon NA
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 
-var reqUrl = "https://software.enablon.com/Software/go.asp?u=/Referent/Prods/RqProd&tm=1";
-var appBuild = '';
-var asBuild = '';
-var index = 1;
+var sGoAsp = "go.asp";
+var sGoAspU = "go.asp?u=";
+var sGoAspx = "go.aspx";
+var sGoAspxU = "go.aspx?u=";
 
-function newTab(id)
-{
+var softwareURL = "https://software.enablon.com/Software/";
+
+var createRequestURL = "/Referent/Prods/RqProd&tm=1";
+var newRequestURL = "/Referent/Rqtes&pm=0&tm=1";
+var fireFixRequestURL = "/Referent/FFRq&Process=nGetAllElements";
+
+var reqUrl = softwareURL + sGoAspU + createRequestURL;								//URL for prefilled requests
+var ffUrl = softwareURL + sGoAspU + fireFixRequestURL;								//URL for firefix's software page to retreive id's
+var newReqUrl = softwareURL + sGoAspU + newRequestURL;								//URL for new request creation (outside of version folder)
+
+var index = 1;																		//index for screenshot count
+
+
+
+
+
+
+/*
+	newTab
+	@desc: 		Callback function to open tabs from the value field on a button
+	@param 	string id - 	id of the element
+	@author: Parth Narielwala
+*/
+function newTab(id) {
 	return function () {
 		createTab(id);
 	}
 }
 
-function openTab(url)
-{
+
+
+/*
+	openTab
+	@desc: 		Opens a new tab in the Chome's tab action
+	@param 	string url - 	url of the page user wants to open
+	@author: Parth Narielwala
+*/
+function openTab(url) {
+
 	chrome.tabs.create({ url: url });
 }
 
-function createTab(id)
-{
-	var element = document.getElementById(id);
-	var url = element.attributes[2];
-	document.getElementById(id).addEventListener('onclick', openTab(url.value));
+
+
+/*
+	createTab
+	@desc: 		Grabs the url from the element and then calls a function to open tab
+	@param 	string id - 	id of the element
+	@author: Parth Narielwala
+*/
+function createTab(id) {
+	var url = $('#' + id).attr("value");
+	$('#' + id).click(openTab(url));
 }
 
+
+
+/*
+	injectJavaScript
+	@desc: 		Injects scripts into the software creation page to fill values from the form
+	@author: Parth Narielwala
+*/
 function injectJavaScript() {
+
 	chrome.tabs.onCreated.addListener(function(tab) {
-		var empty = "";
+		
+		//This handles the conversion for the dropdown inputs
 		switch (localStorage.getItem("CW-type")){
 						case "Bug": var type = "0"; break;
 						case "Enhancement": var type = "1"; break;
@@ -47,12 +92,18 @@ function injectJavaScript() {
 						case "Normal": var priority = "2"; break;
 						case "Later": var priority = "3"; break;
 						default: var priority = "2"};
-		//var behavior = localStorage.getItem("CW-behavior")?localStorage.getItem("CW-behavior"):"";
-		//var matches = test.replace(/\n/g, "§");
+		
+		//Retrieves the values of the text fields from localStorage
 		var behavior = localStorage.getItem("CW-behavior");
 		var appBuild = localStorage.getItem("CW-appBuild");
 		var asBuild = localStorage.getItem("CW-asBuild");
 		var asVersion = localStorage.getItem("CW-appVersion");
+		var stepstoreproduce = localStorage.getItem("CW-stepstoreproduce");
+		var title = localStorage.getItem("CW-title");
+		var url = localStorage.getItem("CW-url");
+		var loginpwd = localStorage.getItem("CW-loginpwd");
+
+		//If we cannot get the build of the application and AS, we prepend what we know to the behavior
 		if(appBuild != null && asBuild != null){
 			behavior = behavior + "\n\n\n\n--------------------\n\n";
 			if(asVersion != null){
@@ -60,17 +111,35 @@ function injectJavaScript() {
 			};
 			behavior = behavior + "Product Build: " + appBuild + "\nAS Build: " + asBuild;
 		}
-		var stepstoreproduce = localStorage.getItem("CW-stepstoreproduce");
+
+		//Create a string of javascript that will be injected into the software page
 		var input = 'var type = "' + type + '";' +
 					' var severity = "' + severity + '";' +
 					' var priority = "' + priority + '";' +
-					' var title = "' + localStorage.getItem("CW-title") + '";' +
+					' var title = "' + title + '";' +
 					' var behavior = "' + behavior.replace(/\n/g, "&sect;") + '";' +
 					' var stepstoreproduce = "' + stepstoreproduce.replace(/\n/g, "&sect;") + '";' +
-					' var url = "' + localStorage.getItem("CW-url") + '";' +
-					' var loginpwd = "' + localStorage.getItem("CW-loginpwd") + '";';
+					' var url = "' + url + '";' +
+					' var loginpwd = "' + loginpwd + '";';
 					
-					
+		//We clear the request form			
+		clearRequestAfterCreation();
+		
+		//Inject the scripts
+		chrome.tabs.executeScript(tab.id, {code: input} );
+		chrome.tabs.executeScript(tab.id, {file: 'js/fillRequest.js'});
+	});
+}
+
+
+
+/*
+	clearRequestAfterCreation
+	@desc: 		Clears the request form after prefilling the softare request
+	@author: Parth Narielwala
+*/
+function clearRequestAfterCreation(){
+
 		//figure out how to call these in the different files
 		localStorage.removeItem("CW-appBuild");
 		localStorage.removeItem("CW-asBuild");
@@ -94,36 +163,52 @@ function injectJavaScript() {
 		localStorage.setItem("CF-lastsection", 'collapseOne');	
 		//reset window
 		localStorage.setItem("CF-lastwindow", "main");
-		
-		chrome.tabs.executeScript(tab.id, {code: input} );
-		chrome.tabs.executeScript(tab.id, {file: 'js/fillRequest.js'});
-	});
 }
 
-function createRequest()
-{
+
+
+
+/*
+	createRequest
+	@desc: 		Creates the request and applies the appropriate url parameters
+	@author: Parth Narielwala
+*/
+function createRequest() {
+
 	return function (){	
+
+		//Call a function to check if the required fields are filled
 		var requiredFilled = checkRequiredFields();
+
+		//If the fields are filled...
 		if(requiredFilled){
-			var urlAppId = "https://software.enablon.com/Software/go.asp?u=/Referent/FFRq&Process=nGetAllElements" +
+
+			//Builds a URL to make an ajax call to retrieve id's of the links
+			var urlAppId = ffUrl +
 						   "&sAppId=" + $("#application").text() + 
 						   "&sAppVersion=" + $("#release").text() + 
 						   "&sAppBuild=" + $("#build").text() +
 						   "&sSocleVersion=" + encodeURIComponent($("#asversion").text()) +
 						   "&sSocleBuild=" + $("#asbuild").text();
-			console.log("urlAppId: " + urlAppId);
+			
+			//Save application and release info
 			var sAppId = $("#application").text() + " " + $("#release").text();
 			$('#loading').show();
+
+			///Make the ajax call to firefix software page
 			$.ajax({
 				url: urlAppId,
 				type: 'GET',
 				timeout: 5000,
 				cache: false,
-				success: function(data, textStatus, jqXHR){
+				success: function(data, textStatus, jqXHR){ //If call is successful
+
+					//Grab the id's from the page
 					var productId = $('#nGetProduct', data).text();
 					var productBuildId = $('#nGetProductBuild', data).text();
 					var socleBuildId = $('#nGetSocleBuild', data).text();
 					
+					//If we can get the product id, we go into the folder
 					if(productId.trim() != ""){
 						var newURL = 	reqUrl + 
 										"&fid=" + productId + 
@@ -131,10 +216,15 @@ function createRequest()
 										"&Fld__xml_BuildSocle=" + socleBuildId + 
 										"&ext=1";
 					}
+					//Otherwise we create the request outside the folder
 					else{
+
+						//Retrive the hardcoded id from getVersionInfo.js file
 						var nAppId = applicationMapping(sAppId);
 						if(nAppId == null){
-							var newURL = 	"https://software.enablon.com/Software/go.asp?u=/Referent/Rqtes&pm=0&tm=1";
+
+							//If we still don't have an id, just create a regular request and and save the application info
+							var newURL = newReqUrl;
 							if(sAppId != null){
 								localStorage.setItem("CW-appVersion", sAppId);
 							}
@@ -142,14 +232,17 @@ function createRequest()
 						else{
 							var newURL = reqUrl + "&fid=" + nAppId;
 						};
+
+						//Save the build numbers so that we can print them in a text area field
 						localStorage.setItem("CW-appBuild", $("#build").text());
 						localStorage.setItem("CW-asBuild", $("#asbuild").text());
 					}
 					
-					chrome.tabs.create({ url: newURL });
+					//Open request tab
+					openTab(newURL);
 				},
 				error: function(jqXHR, textStatus, errorThrown){
-					alert("error");
+					alert("Software is down");
 				}
 				});
 		}
@@ -157,6 +250,15 @@ function createRequest()
 
 }
 
+
+
+
+
+/*
+	takeScreenshot
+	@desc: 		Takes a screenshot of the current tab
+	@author: Yiwen Wang
+*/
 function takeScreenshot() {
   chrome.tabs.captureVisibleTab(null, function(img) {
     var screenshotUrl = img;
@@ -172,6 +274,15 @@ function takeScreenshot() {
   });
 }
 
+
+
+
+/*
+	clickHandler
+	@desc: 		Click handler for the screenshot function
+	@author: Yiwen Wang
+*/
 function clickHandler(e){	
+
 	setTimeout(takeScreenshot, 1000);
 }
