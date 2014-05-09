@@ -21,7 +21,6 @@ function initializeButtonClicks()
 	$("#btn-logout").click(function(){logger.logoutFromSW()});						//Logs out of software
 	$("#btn-screenshot").click(function(){clickHandler()});							//Takes a screenshot
 	$("#btn-cancel").click(clearFields());											//Clears input fields when user cancels the form
-	$("#btn-createRequest").click(fillDefaultValues());								//Fills in the default values (mainly for dropdowns)
 	$("#btn-create").click(createRequest());										//Submits form to actual software page when you hit "Create"
 
 	$("#btn-createRequest").click(function(){ getVersionInfo()});

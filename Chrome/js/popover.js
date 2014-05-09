@@ -1,11 +1,16 @@
-//Created by Parth Narielwala
+// ChromWare Team - Enablon NA
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 
-//This function will create a popover on the input fields
-//if there is any value in the field. This is because the
-//user can't tell what the field is after there is values
-//because you can no longer see the placeholder text
-
+/*
+	dynamicPopover
+	@desc: 		This function will create a popover on the input fields
+				if there is any value in the field. This is because the
+				user can't tell what the field is after there is values
+				because you can no longer see the placeholder text
+	@author: Parth Narielwala
+*/
 function dynamicPopover(){
 	$(document).ready(function() {
 		//This gets all the input fields
