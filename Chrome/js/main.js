@@ -34,7 +34,8 @@ function initializeButtonClicks()
 function main()
 {
 	//Initialization
-
+	initWindows();
+	
 	//Hide all views except main
 	$('#create-request').hide();
 	$('#loginWindow').hide();
