@@ -32,6 +32,7 @@ function rememberFields()
 */
 function fillFields()
 {
+<<<<<<< HEAD
 	
 	var formField = ".form-control";
 	$(formField).each(function() {
@@ -41,6 +42,25 @@ function fillFields()
 		{
 			$(this).val(fieldValue);
 		}
+=======
+	$(document).ready(function() {
+		var formField = ".form-control";
+		$(formField).each(function() {
+			var fieldId = $(this).attr('id');
+			var fieldValue = localStorage.getItem("CW-" + fieldId);
+			if(fieldValue != null)
+			{
+				$(this).val(fieldValue);
+			}
+		});
+
+		$('#release').html(localStorage.getItem("CW-release"));
+		$('#build').html(localStorage.getItem("CW-build"));
+		$('#application').html(localStorage.getItem("CW-application"));
+
+		$('#asbuild').html(localStorage.getItem("CW-asBuild"));
+		$('#asversion').html(localStorage.getItem("CW-asRelease"));
+>>>>>>> origin/master
 	});
 
 	//Fills in the site info from local storage
@@ -71,6 +91,23 @@ function clearFields()
 
 		//Removes any validations the user did not meet
 		removeValidation();
+<<<<<<< HEAD
+=======
+
+		$('#release').html("");
+		$('#build').html("");
+		$('#application').html("");
+		$('#asbuild').html("");
+		$('#asversion').html("");
+
+		localStorage.removeItem("CW-release");
+		localStorage.removeItem("CW-build");
+		localStorage.removeItem("CW-application");
+		localStorage.removeItem("CW-asBuild");
+		localStorage.removeItem("CW-asRelease");
+	};
+}
+>>>>>>> origin/master
 
 		//Clears the site information
 		$('#release').html("");

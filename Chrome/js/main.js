@@ -21,6 +21,10 @@ function initializeButtonClicks()
 	$("#btn-logout").click(function(){logger.logoutFromSW()});						//Logs out of software
 	$("#btn-screenshot").click(function(){clickHandler()});							//Takes a screenshot
 	$("#btn-cancel").click(clearFields());											//Clears input fields when user cancels the form
+<<<<<<< HEAD
+=======
+	$("#btn-createRequest").click(fillDefaultValues());								//Fills in the default values (mainly for dropdowns)
+>>>>>>> origin/master
 	$("#btn-create").click(createRequest());										//Submits form to actual software page when you hit "Create"
 
 	$("#btn-createRequest").click(function(){ getVersionInfo()});
@@ -33,11 +37,18 @@ function initializeButtonClicks()
 function main()
 {
 	//Initialization
+<<<<<<< HEAD
 
 	//Hide all views except main
 	$('#create-request').hide();
 	$('#loginWindow').hide();
 	$('#loading').hide();
+=======
+	initWindows();
+	
+	//Hide all views
+	$('.windows').hide();
+>>>>>>> origin/master
 
 	//Creates callback function to inject javascript into software request creation page
 	injectJavaScript();

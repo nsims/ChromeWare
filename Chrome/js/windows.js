@@ -1,8 +1,12 @@
 //Created by Parth Narielwala
 
-
-
-var windows = ["create-request", "main", "loginWindow", "loading"]
+var windows = [];
+function initWindows(){
+	console.log('$(.window).length: ' + $('.window').length);
+	for(var i=0; i<$('.window').length;i++){
+		windows.push($('.window')[i].id);
+	}
+}
 
 function switchWindow(id)
 {
@@ -13,24 +17,8 @@ function switchWindow(id)
 
 function changeWindow(id)
 {
- console.log("" + id);
- var element = document.getElementById(id);
- var attribute = element.attributes[2];
- var windowId = attribute.value;
- for(var i=0; i<windows.length;i++)
- {
-  if(windows[i] == windowId)
-  {
-   $('#' + windowId).show();
-   //document.getElementById(windowId).className = "window";
-   localStorage.setItem("CF-lastwindow", windowId);
-  }
-  else
-  {
-   $('#' + windows[i]).hide();
-   //document.getElementById(windows[i]).className += " hide";
-  }
- }
+ var windowId = $("#" + id).attr("value");
+ changeWindowFromId(windowId);
 }
 
 function changeWindowFromId(windowId) {
@@ -39,20 +27,17 @@ function changeWindowFromId(windowId) {
 		if(windows[i] == windowId)
 		{
 			$('#' + windowId).show();
-			//document.getElementById(windowId).className = "window";
 			localStorage.setItem("CF-lastwindow", windowId);
 		}
 		else
 		{
 			$('#' + windows[i]).hide();
-			//document.getElementById(windows[i]).className += " hide";
 		}
 	}
 }
 
 function loadLastWindow()
 {
-	console.log("loadLastWindow()");
 	var windowId = localStorage.getItem("CF-lastwindow");
 	if(windowId != null)
 	{
@@ -61,13 +46,11 @@ function loadLastWindow()
 			if(windows[i] == windowId)
 			{
 				$('#' + windowId).show();
-				//document.getElementById(windowId).className = "window";
 				localStorage.setItem("CF-lastwindow", windowId);
 			}
 			else
 			{
 				$('#' + windows[i]).hide();
-				//document.getElementById(windows[i]).className += " hide";
 			}
 		}
 	}
