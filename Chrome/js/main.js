@@ -36,10 +36,8 @@ function main()
 	//Initialization
 	initWindows();
 	
-	//Hide all views except main
-	$('#create-request').hide();
-	$('#loginWindow').hide();
-	$('#loading').hide();
+	//Hide all views
+	$('.windows').hide();
 
 	//Creates callback function to inject javascript into software request creation page
 	injectJavaScript();
