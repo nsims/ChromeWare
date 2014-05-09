@@ -33,6 +33,12 @@ function applicationMapping(sAppId) {
 		case "CMS 7.0":
 			var ret = 415;
 			break;
+		case "HO 7.0":
+			var ret = 347;
+			break;
+		case "HO 7.2":
+			var ret = 524;
+			break;
 		default:
 			var ret = null;
 			break;
@@ -126,6 +132,7 @@ function processAppBuildInfo(appVerPageUrl, appId) {
 					
 					if(shortClassName === mapAppIdToModuleName(appId)) {
 						$('#application').html(shortClassName);
+						localStorage.setItem("CW-application", shortClassName);
 						var releaseAndBuild = appElementPieces[1];
 						var appBuildPieces = releaseAndBuild.split(".");
 						release = appBuildPieces[0] + "." + appBuildPieces[1];
@@ -136,6 +143,10 @@ function processAppBuildInfo(appVerPageUrl, appId) {
 				console.log('buildNo = ' + buildNo);
 				$('#release').html(release);
 				$('#build').html(buildNo);
+
+				//Store values
+				localStorage.setItem("CW-release", release);
+				localStorage.setItem("CW-build", buildNo);
 			}
 		}
 	);
@@ -157,71 +168,144 @@ function processASBuildInfo(ASVerPageUrl) {
 				
 				var asBuild = data.substring(buildIndex + 6, data.indexOf("<div"));
 				$('#asbuild').html(asBuild);
+
+				//Store values
+				localStorage.setItem("CW-asRelease", asRelease);
+				localStorage.setItem("CW-asBuild", asBuild);
 			}
 		}
 	);
 }
 
+function checkPlatformSession(){
+
+$("#btn-createRequest").prop("disabled",true);
+chrome.tabs.query({active: true, currentWindow: true}, 
+			function(tabs){
+				// Get URL of current page
+				thisURL = tabs[0].url;
+				
+				var urlPieces = thisURL.split("/");
+				var domain = urlPieces[2];
+				var serverVer = urlPieces[3];
+				var siteId = urlPieces[4];
+				var aspQueryStart = urlPieces[5];
+				var appId = urlPieces[6];
+				var pageId = urlPieces[7];
+				
+				console.log(urlPieces);
+				// Check to make sure this is an enablon site before ajax calls
+
+				
+				if(domain.indexOf("enablon") == -1) {
+					return
+				}
+				
+				var domainPieces = domain.split(".");
+				var enablonServer = domainPieces[0];
+			
+			
+				
+				if(["inno", "innous", "inno2"].indexOf(enablonServer) > -1) {	
+					$.get(tabs[0].url,
+						function (data, status) {
+							if(status === 'success') {
+								var form = data.indexOf("LoginForm");
+								if(form == -1){ //So user is already logged into site
+									console.log("huh?")
+									$("#btn-createRequest").prop("disabled",false);
+								}
+								else{
+									displayAlert("You are logged out of this site", 'alert-danger')
+								}
+							}
+						});
+				}
+			});
+}
+
+
 function getVersionInfo() {
 
 	var thisURL = null;
-	
-	chrome.tabs.query({active: true, currentWindow: true}, 
-		function(tabs){ 
-                                
-			// Get URL of current page
-			thisURL = tabs[0].url;
-			
-			var urlPieces = thisURL.split("/");
-			var domain = urlPieces[2];
-			var serverVer = urlPieces[3];
-			var siteId = urlPieces[4];
-			var aspQueryStart = urlPieces[5];
-			var appId = urlPieces[6];
-			var pageId = urlPieces[7];
-			
-			console.log(urlPieces);
-			// Check to make sure this is an enablon site before ajax calls
-			if(domain.indexOf("enablon") == -1) {
-				return
-			}
-			
-			// Determine URLs of version pages for this site
-			var basicSiteUrlPieces = urlPieces.slice(0, 6);
-			var verPageUrlStub = basicSiteUrlPieces.join("/");
-			
-			//Many pages when you first log in have no "go.asp" in the URL
-			//but we need that, so we'll process it like it does have it.
-			if(aspQueryStart == "" || aspQueryStart == null){
-				switch (serverVer) {
-					case "Bespin":
-						aspQueryStart = "go.aspx?u=";
-						break;
-					case "Coruscant":
-						aspQueryStart = "go.aspx?u=";
-						break;
-					
-					default:
-						aspQueryStart = "go.asp?u=";
+
+	console.log("debug");
+	if(localStorage.getItem("CF-lastwindow") == "create-request"){
+		chrome.tabs.query({active: true, currentWindow: true}, 
+			function(tabs){ 
+	                                
+				// Get URL of current page
+				thisURL = tabs[0].url;
+				
+				var urlPieces = thisURL.split("/");
+				var domain = urlPieces[2];
+				var serverVer = urlPieces[3];
+				var siteId = urlPieces[4];
+				var aspQueryStart = urlPieces[5];
+				var appId = urlPieces[6];
+				var pageId = urlPieces[7];
+				
+				console.log(urlPieces);
+				// Check to make sure this is an enablon site before ajax calls
+
+				
+				if(domain.indexOf("enablon") == -1) {
+					return
 				}
-				verPageUrlStub = verPageUrlStub + aspQueryStart
+				
+				var domainPieces = domain.split(".");
+				var enablonServer = domainPieces[0];
+			
+			
+				
+				if(["inno", "innous", "inno2"].indexOf(enablonServer) > -1) {	
+					// Determine URLs of version pages for this site
+					var basicSiteUrlPieces = urlPieces.slice(0, 6);
+					var verPageUrlStub = basicSiteUrlPieces.join("/");
+					
+					//Many pages when you first log in have no "go.asp" in the URL
+					//but we need that, so we'll process it like it does have it.
+					if(aspQueryStart == "" || aspQueryStart == null){
+						switch (serverVer) {
+							case "Bespin":
+								aspQueryStart = "go.aspx?u=";
+								break;
+							case "Coruscant":
+								aspQueryStart = "go.aspx?u=";
+								break;
+							
+							default:
+								aspQueryStart = "go.asp?u=";
+						}
+						verPageUrlStub = verPageUrlStub + aspQueryStart
+					}
+					var appVerPageUrl = verPageUrlStub + '/ver';
+					var ASVerPageUrl = verPageUrlStub + 'ver';
+					
+					processAppBuildInfo(appVerPageUrl, appId);
+					processASBuildInfo(ASVerPageUrl);
+					
+					// if(nVersioningLength >= 1) { sVersioningMode = '.VPACK b'; }
+					// else {
+						// nVersioningLength = $('.VMOD b').length;
+						// if($('.VMOD b').length >= 1) { sVersioningMode = '.VMOD b'; }
+						// else {
+							// nVersioningLength = $('.VAPP b').length;
+							// if($('.VAPP b').length >= 1) { sVersioningMode = '.VAPP b'; }
+							// else { sVersioningMode = '.ERROR b'; }
+						// }
+					// }
+				}
+				
 			}
-			var appVerPageUrl = verPageUrlStub + '/ver';
-			var ASVerPageUrl = verPageUrlStub + 'ver';
-			
-			processAppBuildInfo(appVerPageUrl, appId);
-			processASBuildInfo(ASVerPageUrl);
-			
-			// if(nVersioningLength >= 1) { sVersioningMode = '.VPACK b'; }
-			// else {
-				// nVersioningLength = $('.VMOD b').length;
-				// if($('.VMOD b').length >= 1) { sVersioningMode = '.VMOD b'; }
-				// else {
-					// nVersioningLength = $('.VAPP b').length;
-					// if($('.VAPP b').length >= 1) { sVersioningMode = '.VAPP b'; }
-					// else { sVersioningMode = '.ERROR b'; }
-				// }
-			// }
-		}
-	); //end chrome.tabs.query function
+		); //end chrome.tabs.query function
+	}
+	else{
+		$('#release').html(localStorage.getItem("CW-release"));
+		$('#build').html(localStorage.getItem("CW-build"));
+		$('#application').html(localStorage.getItem("CW-application"));
+
+		$('#asbuild').html(localStorage.getItem("CW-asBuild"));
+		$('#asversion').html(localStorage.getItem("CW-asRelease"));
+	}
 }
