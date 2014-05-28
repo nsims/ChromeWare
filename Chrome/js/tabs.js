@@ -74,6 +74,7 @@ function injectJavaScript() {
 
 	chrome.tabs.onCreated.addListener(function(tab) {
 		
+
 		//This handles the conversion for the dropdown inputs
 		switch (localStorage.getItem("CW-type")){
 						case "Bug": var type = "0"; break;
@@ -110,7 +111,7 @@ function injectJavaScript() {
 				behavior = behavior + "Product: " + asVersion + "\n";
 			};
 			behavior = behavior + "Product Build: " + appBuild + "\nAS Build: " + asBuild;
-		}
+		};
 
 		//Create a string of javascript that will be injected into the software page
 		var input = 'var type = "' + type + '";' +
@@ -122,8 +123,15 @@ function injectJavaScript() {
 					' var url = "' + url + '";' +
 					' var loginpwd = "' + loginpwd + '";';
 					
+		
 		//We clear the request form			
 		clearRequestAfterCreation();
+
+		//Testing
+		/*console.log("from chromeware");
+		chrome.tabs.executeScript(null, {code: "alert('Hello World')"} );
+		localStorage.setItem("ErrorMsg", tab.id);
+		input = input + ' console.log("come onn")';*/
 		
 		//Inject the scripts
 		chrome.tabs.executeScript(tab.id, {code: input} );

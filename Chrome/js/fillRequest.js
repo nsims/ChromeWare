@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-	//alert("hello");
+	// alert("hello");
 	$('#fld_XType_' + type).attr('checked', true);
 	$('#fld_Sev_' + severity).attr('checked', true);
 	$('#fld_XPriorit_' + priority).attr('checked', true);

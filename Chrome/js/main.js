@@ -26,6 +26,19 @@ function initializeButtonClicks()
 	$("#btn-createRequest").click(function(){ getVersionInfo()});
 }
 
+function initializeChromeWare(){
+	changeWindow("main");
+
+	//reset section
+		$('#collapseOne').addClass('in');
+		$('#collapseOne').css({height: 'auto'});
+		$('#collapseTwo').removeClass('in');
+		$('#collapseTwo').css({height: '0px'});
+		$('#collapseThree').removeClass('in');
+		$('#collapseThree').css({height: '0px'});
+		localStorage.setItem("CF-lastsection", 'collapseOne');
+}
+
 
 
 
@@ -34,7 +47,17 @@ function main()
 {
 	//Initialization
 	initWindows();
-	
+
+	//First time initialization
+	if(localStorage.length == 0){
+		console.log(localStorage.length);
+		initializeChromeWare()
+	}
+	else{
+		console.log("else " + localStorage.length);
+		trackSection();							//Tracks what collapsable section was open last
+		loadLastSection();						//Loads the last collapsable section
+	}
 	//Hide all views
 	$('.windows').hide();
 
@@ -53,8 +76,6 @@ function main()
 	checkPlatformSession();
 	
 	
-	trackSection();							//Tracks what collapsable section was open last
-	loadLastSection();						//Loads the last collapsable section
 	dynamicPopover();						//Enables the popover for each field in the request form
 	fillFields();							//Fills the fields with remembered values (if user leaves popup in the middle of creation)
 	rememberFields();						//Remembers the fields user has inputted

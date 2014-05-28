@@ -14,12 +14,8 @@ function rememberFields()
 	var formField = ".form-control";
 	$(formField).focusout(function() {
 		var fieldId = $(this).attr('id');
-
-		//If the field is not the field name, save it
-		if(fieldId != 'filename'){
-			var fieldValue = $(this).val();
-			localStorage.setItem("CW-" + fieldId, fieldValue);
-		};
+		var fieldValue = $(this).val();
+		localStorage.setItem("CW-" + fieldId, fieldValue);
 	});
 }
 
@@ -37,7 +33,7 @@ function fillFields()
 	$(formField).each(function() {
 		var fieldId = $(this).attr('id');
 		var fieldValue = localStorage.getItem("CW-" + fieldId);
-		if(fieldValue != null)
+		if(fieldValue != null && fieldId != "filename")
 		{
 			$(this).val(fieldValue);
 		}
@@ -65,7 +61,24 @@ function clearFields()
 		var formField = ".form-control";
 		$(formField).each(function() {
 			var fieldId = $(this).attr('id');
-			$(this).val("");
+
+			if(["type", "severity", "priority"].indexOf(fieldId) > -1){
+				switch(fieldId){
+					case "type": 
+									$(this).val("Bug"); 
+									break;
+					case "severity": 
+									$(this).val("Minor"); 
+									break;
+					case "priority": 
+									$(this).val("Normal"); 
+									break;
+				};
+				console.log("fieldId: " + fieldId);
+			}
+			else{
+				$(this).val("");
+			};
 			localStorage.removeItem("CW-" + fieldId);
 		});
 

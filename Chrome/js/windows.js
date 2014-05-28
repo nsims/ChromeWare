@@ -57,6 +57,8 @@ function loadLastWindow()
 	else{
 		$('#main').show();
 		$('#loading').hide();
+		$('#create-request').hide();
+		$('#loginWindow').hide();
 		localStorage.setItem("CF-lastwindow", "main");
 	}
 }

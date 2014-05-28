@@ -38,7 +38,7 @@ function loadLastSection()
 		$('#'+ sectionId).collapse({parent: "#accordion"})
 	}
 	else{
-		resetSectionCallback();
+		resetSection();
 	}
 }
 
