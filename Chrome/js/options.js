@@ -11,6 +11,8 @@ function save_options() {
 	{
 		console.log('dummy pwd');
 	}
+	var reqParamOption = $('#reqParam').val();
+	localStorage.setItem("CW-urlParams", reqParamOption);
 
   // Update status to let user know options were saved.
   var status = document.getElementById("status");
@@ -22,12 +24,15 @@ function save_options() {
 
 // Restores select box state to saved value from localStorage.
 function restore_options() {
+	$('#reqParam').val(localStorage.getItem("CW-urlParams"));
+	
 	var swLogin = localStorage["swLogin"];
 	if(!swLogin) {
 		return;
 	}
 	var swLoginInput = $('#SWLogin');
 	swLoginInput.val(swLogin);
+
 	
 	var swPwd = localStorage["encryptedPassPart"];
 	if(!swPwd) {

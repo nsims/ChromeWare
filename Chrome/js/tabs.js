@@ -74,47 +74,49 @@ function injectJavaScript() {
 
 	chrome.tabs.onCreated.addListener(function(tab) {
 		
+		var input = "";
 
-		//This handles the conversion for the dropdown inputs
-		switch (localStorage.getItem("CW-type")){
-						case "Bug": var type = "0"; break;
-						case "Enhancement": var type = "1"; break;
-						case "Product Opening": var type = "2"; break;
-						case "Question": var type = "3"; break;
-						default: var type = "0"};
-		switch (localStorage.getItem("CW-severity")){
-						case "Severe": var severity = "0"; break;
-						case "Major": var severity = "1"; break;
-						case "Minor": var severity = "2"; break;
-						default: var severity = "2"};
-		switch (localStorage.getItem("CW-priority")){
-						case "Immediate": var priority = "0"; break;
-						case "At the earliest": var priority = "1"; break;
-						case "Normal": var priority = "2"; break;
-						case "Later": var priority = "3"; break;
-						default: var priority = "2"};
-		
-		//Retrieves the values of the text fields from localStorage
-		var behavior = localStorage.getItem("CW-behavior");
-		var appBuild = localStorage.getItem("CW-appBuild");
-		var asBuild = localStorage.getItem("CW-asBuild");
-		var asVersion = localStorage.getItem("CW-appVersion");
-		var stepstoreproduce = localStorage.getItem("CW-stepstoreproduce");
-		var title = localStorage.getItem("CW-title");
-		var url = localStorage.getItem("CW-url");
-		var loginpwd = localStorage.getItem("CW-loginpwd");
+		if(localStorage.getItem("CW-urlParams") == "no"){
+			//This handles the conversion for the dropdown inputs
+			switch (localStorage.getItem("CW-type")){
+							case "Bug": var type = "0"; break;
+							case "Enhancement": var type = "1"; break;
+							case "Product Opening": var type = "2"; break;
+							case "Question": var type = "3"; break;
+							default: var type = "0"};
+			switch (localStorage.getItem("CW-severity")){
+							case "Severe": var severity = "0"; break;
+							case "Major": var severity = "1"; break;
+							case "Minor": var severity = "2"; break;
+							default: var severity = "2"};
+			switch (localStorage.getItem("CW-priority")){
+							case "Immediate": var priority = "0"; break;
+							case "At the earliest": var priority = "1"; break;
+							case "Normal": var priority = "2"; break;
+							case "Later": var priority = "3"; break;
+							default: var priority = "2"};
+			
+			//Retrieves the values of the text fields from localStorage
+			var behavior = localStorage.getItem("CW-behavior");
+			var appBuild = localStorage.getItem("CW-appBuild");
+			var asBuild = localStorage.getItem("CW-asBuild");
+			var asVersion = localStorage.getItem("CW-appVersion");
+			var stepstoreproduce = localStorage.getItem("CW-stepstoreproduce");
+			var title = localStorage.getItem("CW-title");
+			var url = localStorage.getItem("CW-url");
+			var loginpwd = localStorage.getItem("CW-loginpwd");
 
-		//If we cannot get the build of the application and AS, we prepend what we know to the behavior
-		if(appBuild != null && asBuild != null){
-			behavior = behavior + "\n\n\n\n--------------------\n\n";
-			if(asVersion != null){
-				behavior = behavior + "Product: " + asVersion + "\n";
+			//If we cannot get the build of the application and AS, we prepend what we know to the behavior
+			if(appBuild != null && asBuild != null){
+				behavior = behavior + "\n\n\n\n--------------------\n\n";
+				if(asVersion != null){
+					behavior = behavior + "Product: " + asVersion + "\n";
+				};
+				behavior = behavior + "Product Build: " + appBuild + "\nAS Build: " + asBuild;
 			};
-			behavior = behavior + "Product Build: " + appBuild + "\nAS Build: " + asBuild;
-		};
 
-		//Create a string of javascript that will be injected into the software page
-		var input = 'var type = "' + type + '";' +
+			//Create a string of javascript that will be injected into the software page
+			input = 'var type = "' + type + '";' +
 					' var severity = "' + severity + '";' +
 					' var priority = "' + priority + '";' +
 					' var title = "' + title + '";' +
@@ -122,7 +124,8 @@ function injectJavaScript() {
 					' var stepstoreproduce = "' + stepstoreproduce.replace(/\n/g, "&sect;") + '";' +
 					' var url = "' + url + '";' +
 					' var loginpwd = "' + loginpwd + '";';
-					
+						
+		}
 		
 		//We clear the request form			
 		clearRequestAfterCreation();
@@ -221,11 +224,23 @@ function createRequest() {
 						var newURL = 	reqUrl + 
 										"&fid=" + productId + 
 										"&Fld__xml_BuildProduct=" + productBuildId + 
-										"&Fld__xml_BuildSocle=" + socleBuildId + 
-										"&ext=1";
+										"&Fld__xml_BuildSocle=" + socleBuildId;
+
+						if(localStorage.getItem("CW-urlParams") == "yes"){
+							console.log("Params test1");
+							newURL = 	getURLPath("newRequestParams", newURL);
+						}
+						else{
+							newURL = 	newURL + "&ext=1";
+						}
+
 					}
 					//Otherwise we create the request outside the folder
 					else{
+
+						//Save the build numbers so that we can print them in a text area field
+						localStorage.setItem("CW-appBuild", $("#build").text());
+						localStorage.setItem("CW-asBuild", $("#asbuild").text());
 
 						//Retrive the hardcoded id from getVersionInfo.js file
 						var nAppId = applicationMapping(sAppId);
@@ -233,17 +248,22 @@ function createRequest() {
 
 							//If we still don't have an id, just create a regular request and and save the application info
 							var newURL = newReqUrl;
+							if(localStorage.getItem("CW-urlParams") == "yes"){
+								console.log("Params test2");
+								newURL = 	getURLPath("newRequestParams", newURL);
+							}
 							if(sAppId != null){
 								localStorage.setItem("CW-appVersion", sAppId);
 							}
 						}
 						else{
 							var newURL = reqUrl + "&fid=" + nAppId;
+							if(localStorage.getItem("CW-urlParams") == "yes"){
+								console.log("Params test3");
+								newURL = 	getURLPath("newRequestParams", newURL);
+								console.log("newURL: " + newURL);
+							}
 						};
-
-						//Save the build numbers so that we can print them in a text area field
-						localStorage.setItem("CW-appBuild", $("#build").text());
-						localStorage.setItem("CW-asBuild", $("#asbuild").text());
 					}
 					
 					//Open request tab

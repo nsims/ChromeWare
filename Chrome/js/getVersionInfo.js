@@ -248,6 +248,8 @@ function getVersionInfo() {
 				console.log(urlPieces);
 				// Check to make sure this is an enablon site before ajax calls
 
+				$('#url').val(thisURL);
+				localStorage.setItem("CW-url", thisURL);
 				
 				if(domain.indexOf("enablon") == -1) {
 					return
@@ -308,4 +310,64 @@ function getVersionInfo() {
 		$('#asbuild').html(localStorage.getItem("CW-asBuild"));
 		$('#asversion').html(localStorage.getItem("CW-asRelease"));
 	}
+}
+
+function getURLPath(mode, baseUrl){
+
+	switch(mode){
+		case "newRequestParams":
+			switch (localStorage.getItem("CW-type")){
+							case "Bug": var type = "BG"; break;
+							case "Enhancement": var type = "EV"; break;
+							case "Product Opening": var type = "OR"; break;
+							case "Question": var type = "QU"; break;
+							default: var type = "BG"};
+			switch (localStorage.getItem("CW-severity")){
+							case "Severe": var severity = "1"; break;
+							case "Major": var severity = "2"; break;
+							case "Minor": var severity = "3"; break;
+							default: var severity = "3"};
+			switch (localStorage.getItem("CW-priority")){
+							case "Immediate": var priority = "1"; break;
+							case "At the earliest": var priority = "2"; break;
+							case "Normal": var priority = "3"; break;
+							case "Later": var priority = "4"; break;
+							default: var priority = "3"};
+			//Retrieves the values of the text fields from localStorage
+			var behavior = localStorage.getItem("CW-behavior");
+			var appBuild = localStorage.getItem("CW-appBuild");
+			var asBuild = localStorage.getItem("CW-asBuild");
+			var asVersion = localStorage.getItem("CW-appVersion");
+			var stepstoreproduce = localStorage.getItem("CW-stepstoreproduce");
+			var title = localStorage.getItem("CW-title");
+			var url = localStorage.getItem("CW-url");
+			var loginpwd = localStorage.getItem("CW-loginpwd");
+
+			//If we cannot get the build of the application and AS, we prepend what we know to the behavior
+			if(appBuild != null && asBuild != null){
+				behavior = behavior + "%0A%0A%0A%0A--------------------%0A%0A";
+				if(asVersion != null){
+					behavior = behavior + "Product: " + asVersion + "\n";
+				};
+				behavior = behavior + "Product Build: " + appBuild + "\nAS Build: " + asBuild;
+			};
+			console.log("Should be seen");
+			returnURL = 	baseUrl + 
+							"&Fld__xml_Type=" + type +
+							"&Fld__xml_Severity=" + severity +
+							"&Fld__xml_Priority=" + priority +
+							"&Fld__xml_Title=" + title +
+							"&Fld__xml_StepsToReproduce=" + stepstoreproduce.replace(/\n/g, "%0A") +
+							"&Fld__xml_Description=" + behavior.replace(/\n/g, "%0A") +
+							"&Fld__xml_URL=" + url +
+							"&Fld__xml_LoginPassword=" + loginpwd +
+							"&ext=1";
+			break;
+		default: 
+			console.log("Should NOT be seen");
+			returnURL = baseUrl;
+	}
+
+
+	return returnURL;
 }
