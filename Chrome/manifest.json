@@ -13,7 +13,8 @@
 	"https://software.enablon.com/*",
 	"https://*.enablon.com/*",
 	"http://*.enablon.com/*",
-	"http://localhost/*"
+	"http://localhost/*",
+	"contextMenus"
   ],
   "background":{
 	"scripts": ["js/main.js", 
@@ -26,7 +27,8 @@
 				"js/crypto/md5.js", 
 				"js/screenshottabs.js", 
 				"js/getVersionInfo.js",
-				"js/eventPage.js"]
+				"js/eventPage.js",
+				"js/contextmenu.js"]
   },
   "content_scripts": [
     {
