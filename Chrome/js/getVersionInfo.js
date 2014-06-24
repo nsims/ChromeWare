@@ -343,28 +343,28 @@ function getURLPath(mode, baseUrl){
 			var url = localStorage.getItem("CW-url");
 			var loginpwd = localStorage.getItem("CW-loginpwd");
 
+
 			//If we cannot get the build of the application and AS, we prepend what we know to the behavior
 			if(appBuild != null && asBuild != null){
-				behavior = behavior + "%0A%0A%0A%0A--------------------%0A%0A";
+				behavior = behavior + "\n\n\n\n--------------------\n\n";
 				if(asVersion != null){
 					behavior = behavior + "Product: " + asVersion + "\n";
 				};
 				behavior = behavior + "Product Build: " + appBuild + "\nAS Build: " + asBuild;
 			};
-			console.log("Should be seen");
+			
 			returnURL = 	baseUrl + 
 							"&Fld__xml_Type=" + type +
 							"&Fld__xml_Severity=" + severity +
 							"&Fld__xml_Priority=" + priority +
-							"&Fld__xml_Title=" + title +
-							"&Fld__xml_StepsToReproduce=" + stepstoreproduce.replace(/\n/g, "%0A") +
-							"&Fld__xml_Description=" + behavior.replace(/\n/g, "%0A") +
-							"&Fld__xml_URL=" + url +
-							"&Fld__xml_LoginPassword=" + loginpwd +
+							"&Fld__xml_Title=" + encodeURIComponent(title) +
+							"&Fld__xml_StepsToReproduce=" + encodeURIComponent(stepstoreproduce) +
+							"&Fld__xml_Description=" + encodeURIComponent(behavior) +
+							"&Fld__xml_URL=" + encodeURIComponent(url) +
+							"&Fld__xml_LoginPassword=" + encodeURIComponent(loginpwd) +
 							"&ext=1";
 			break;
 		default: 
-			console.log("Should NOT be seen");
 			returnURL = baseUrl;
 	}
 
