@@ -296,7 +296,8 @@ function takeScreenshot() {
 	var imgUrl = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');		
 	var link = document.createElement("a");	
 	link.download = filename + ".jpg";
-	link.href = imgUrl;
+	//link.href = imgUrl;
+	link.href = img;
 	link.click();
     index++;	
   });
