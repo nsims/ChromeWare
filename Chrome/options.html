@@ -1,42 +1,59 @@
 <html>
-<head><title>ChromeFix Options</title></head>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ChromeFix Options</title>
 
-<body style="text-align:center">
-<div style="display: none !important;">
-Favorite Color:
-<select id="color">
- <option value="red">red</option>
- <option value="green">green</option>
- <option value="blue">blue</option>
- <option value="yellow">yellow</option>
-</select>
-</div>
-<div style="padding-top:50px">
-	<span>
-		Software Login:
-		<input type="text" id="SWLogin">
-	</span>
-</div>
-<div>
-	<span>
-		Software Password:
-		<input type="password" id="SWPwd">
-	</span>
-</div>
-<div>
-	<span>
-		Create request using url parameters:
-		<select id="reqParam">
-			<option value="no" selected>No</option>
-			<option value="yes">Yes</option>
-		</select>
+		<!-- Bootstrap -->
+		<link href="dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- <link href="/css/main.css" rel="stylesheet"> -->
 
-	</span>
-</div>
-<br>
-<div id="status"></div>
-<button id="save">Save</button>
-</body>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+
+	<body style="text-align:center">
+		<div style="display: none !important;">
+			Favorite Color:
+			<select id="color">
+			 <option value="red">red</option>
+			 <option value="green">green</option>
+			 <option value="blue">blue</option>
+			 <option value="yellow">yellow</option>
+			</select>
+		</div>
+		<div style="padding-top:50px">
+			<span>
+				Software Login:
+				<input type="text" id="SWLogin">
+			</span>
+		</div>
+		<div>
+			<span>
+				Software Password:
+				<input type="password" id="SWPwd">
+			</span>
+		</div>
+		<div>
+			<span>
+				Create request using url parameters:
+				<select id="reqParam">
+					<option value="no" selected>No</option>
+					<option value="yes">Yes</option>
+				</select>
+
+			</span>
+		</div>
+		<br>
+		<div id="status"></div>
+		<button id="save">Save</button>
+	</body>
 
 
 <script type="text/javascript" src="/js/jquery.js"></script>
