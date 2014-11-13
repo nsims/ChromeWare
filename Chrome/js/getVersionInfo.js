@@ -9,11 +9,23 @@ function applicationMapping(sAppId) {
 		case "AQS 7.0":
 			var ret = 282;
 			break;
+		case "AQS 7.2":
+			var ret = 539;
+			break;
+		case "AQS 7.5":
+			var ret = 603;
+			break;
 		case "Waste 6.0":
 			var ret = 351;
 			break;
 		case "Waste 7.0":
 			var ret = 388;
+			break;
+		case "Waste 7.2":
+			var ret = 565;
+			break;
+		case "Waste 7.5":
+			var ret = 566;
 			break;
 		case "RCM 6.0":
 			var ret = 344;
@@ -21,11 +33,23 @@ function applicationMapping(sAppId) {
 		case "RCM 7.0":
 			var ret = 375;
 			break;
+		case "RCM 7.2":
+			var ret = 535;
+			break;
+		case "RCM 7.5":
+			var ret = 560;
+			break;
 		case "ACS 6.0":
 			var ret = 383;
 			break;
 		case "ACS 7.0":
 			var ret = 414;
+			break;
+		case "ACS 7.2":
+			var ret = 554;
+			break;
+		case "ACS 7.5":
+			var ret = 561;
 			break;
 		case "CMS 6.0":
 			var ret = 350;
@@ -38,6 +62,9 @@ function applicationMapping(sAppId) {
 			break;
 		case "HO 7.2":
 			var ret = 524;
+			break;
+		case "AutoDeliver 7.2":
+			var ret = 645;
 			break;
 		default:
 			var ret = null;
@@ -107,6 +134,9 @@ function mapAppIdToModuleName(appId) {
 			break;
 		case "fw":
 			return "Wizframe";
+			break;
+		case "dl":
+			return "AutoDeliver";
 			break;
 		default:
 			return ""
