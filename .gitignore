@@ -1,1 +1,6 @@
 Chrome/js/getVersionInfo.js
+Chrome.crx
+Chrome.pem
+Chrome.zip
+.gitattributes
+.gitignore
