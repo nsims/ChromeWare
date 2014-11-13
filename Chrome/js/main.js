@@ -28,7 +28,6 @@ function initializeButtonClicks()
 
 function initializeChromeWare(){
 	changeWindow("main");
-	chrome.browserAction.setBadgeText({text: "Beta"})
 	localStorage.setItem("CW-urlParams", "yes");
 	//reset section
 		$('#collapseOne').addClass('in');
@@ -46,6 +45,7 @@ function initializeChromeWare(){
 
 function main()
 {
+
 	//Initialization
 	initWindows();
 
@@ -108,3 +108,5 @@ document.addEventListener('DOMContentLoaded', function ()
 {
 	main();
 });
+
+chrome.browserAction.setBadgeText({text: "Beta"});

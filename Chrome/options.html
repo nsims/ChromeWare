@@ -7,7 +7,7 @@
 
 		<!-- Bootstrap -->
 		<link href="dist/css/bootstrap.min.css" rel="stylesheet">
-		<!-- <link href="/css/main.css" rel="stylesheet"> -->
+		<link href="/css/main.css" rel="stylesheet">
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -15,10 +15,22 @@
 		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		
+		<style>
+			html,
+			body {
+			  height: 100%;
+			  background-color: #333;
+			  width: auto;
+			  height: auto;
+			  overflow: auto;
+			}
+			
+		</style>
 
 	</head>
 
-	<body style="text-align:center">
+	<body style="position:relative;">
 		<div style="display: none !important;">
 			Favorite Color:
 			<select id="color">
@@ -28,34 +40,27 @@
 			 <option value="yellow">yellow</option>
 			</select>
 		</div>
-		<div style="padding-top:50px">
-			<span>
-				Software Login:
-				<input type="text" id="SWLogin">
-			</span>
-		</div>
+		<div class="panel panel-default" style="position:relative;top:100px; width: 500px; margin: 0 auto;">
+			<div class="panel-body">
+				<h1 style="color:black">ChromeWare Settings</h1>
+				<form role="form">
+				  <div class="form-group">
+					<label class="sr-only" for="exampleInputEmail1">Software Login:</label>
+					<input type="text" class="form-control" style="max-width: none !important;" id="SWLogin" placeholder="Enter username">
+				  </div>
+				  <div class="form-group">
+					<label class="sr-only" for="exampleInputEmail1">Software Password:</label>
+					<input type="password" class="form-control" style="max-width: none !important;" id="SWPwd" placeholder="Enter password">
+				  </div>
+				  <div id="status"></div>
+				  <button id="save">Save</button>
+				 </form>
+			</div>
 		<div>
-			<span>
-				Software Password:
-				<input type="password" id="SWPwd">
-			</span>
-		</div>
-		<div>
-			<span>
-				Create request using url parameters:
-				<select id="reqParam">
-					<option value="no" selected>No</option>
-					<option value="yes">Yes</option>
-				</select>
-
-			</span>
-		</div>
 		<br>
-		<div id="status"></div>
-		<button id="save">Save</button>
 	</body>
-
-
+<script type="text/javascript" src="/js/sections.js"></script>
+<script src="dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/jquery.js"></script>
 <script src="/js/options.js"></script>
 <script type="text/javascript" src="/js/crypto/aes.js"></script>
