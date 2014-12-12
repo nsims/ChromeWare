@@ -52,16 +52,23 @@
 					<label class="sr-only" for="exampleInputEmail1">Software Password:</label>
 					<input type="password" class="form-control" style="max-width: none !important;" id="SWPwd" placeholder="Enter password">
 				  </div>
-				  <div id="status"></div>
-				  <button id="save">Save</button>
 				 </form>
 			</div>
+			<div class="panel-body">
+				<button type="button" class="btn btn-default btn-sm" style="margin-bottom: 10px;"id="addNewProduct">
+				  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a new Product
+				</button>
+				<form class="form-horizontal form-inline" role="form" id="productForm">
+				</form>
+			</div>
+			<div id="status"></div>
+		    <button id="save">Save</button>
 		<div>
 		<br>
 	</body>
 <script type="text/javascript" src="/js/sections.js"></script>
+<script src="/js/jquery.js"></script>
 <script src="dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/jquery.js"></script>
 <script src="/js/options.js"></script>
 <script type="text/javascript" src="/js/crypto/aes.js"></script>
 <script type="text/javascript" src="/js/crypto/lazyCrypt.js"></script>

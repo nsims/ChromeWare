@@ -52,7 +52,8 @@ function main()
 	//First time initialization
 	if(localStorage.length == 0){
 		console.log(localStorage.length);
-		initializeChromeWare()
+		initializeChromeWare();
+		initializeVersions()
 	}
 	else{
 		console.log("else " + localStorage.length);

@@ -1,6 +1,67 @@
 // Written by Nathan Sims 
 // inspired by RetrieveAppInfo.js by the FireFix team
 
+function initializeVersions(){
+	var products = [];
+	//AQS
+	localStorage.setItem("AQS 6.0", 343);
+	products.push("AQS 6.0");
+	localStorage.setItem("AQS 7.0", 282);
+	products.push("AQS 7.0");
+	localStorage.setItem("AQS 7.2", 539);
+	products.push("AQS 7.2");
+	localStorage.setItem("AQS 7.5", 603);
+	products.push("AQS 7.5");
+	
+	//WMS
+	localStorage.setItem("Waste 6.0", 351);
+	products.push("Waste 6.0");
+	localStorage.setItem("Waste 7.0", 388);
+	products.push("Waste 7.0");
+	localStorage.setItem("Waste 7.2", 565);
+	products.push("Waste 7.2");
+	localStorage.setItem("Waste 7.5", 566);
+	products.push("Waste 7.5");
+	
+	//RCM
+	localStorage.setItem("RCM 6.0", 344);
+	products.push("RCM 6.0");
+	localStorage.setItem("RCM 7.0", 375);
+	products.push("RCM 7.0");
+	localStorage.setItem("RCM 7.2", 535);
+	products.push("RCM 7.2");
+	localStorage.setItem("RCM 7.5", 560);
+	products.push("RCM 7.5");
+	
+	//ACS
+	localStorage.setItem("ACS 6.0", 383);
+	products.push("ACS 6.0");
+	localStorage.setItem("ACS 7.0", 414);
+	products.push("ACS 7.0");
+	localStorage.setItem("ACS 7.2", 554);
+	products.push("ACS 7.2");
+	localStorage.setItem("ACS 7.5", 561);
+	products.push("ACS 7.5");
+	
+	//CMS
+	localStorage.setItem("CMS 6.0", 350);
+	products.push("CMS 6.0");
+	localStorage.setItem("CMS 7.0", 415);
+	products.push("CMS 7.0");
+	
+	//HO
+	localStorage.setItem("HO 7.0", 347);
+	products.push("HO 7.0");
+	localStorage.setItem("HO 7.2", 524);
+	products.push("HO 7.2");
+
+	//AutoDeliver 7.2
+	localStorage.setItem("AutoDeliver 7.2", 645);
+	products.push("AutoDeliver 7.2");
+	
+	localStorage.setItem("Products", products.join("§"));
+}
+
 function applicationMapping(sAppId) {
 	switch(sAppId){
 		case "AQS 6.0":
@@ -210,6 +271,8 @@ function processASBuildInfo(ASVerPageUrl) {
 function checkPlatformSession(){
 
 $("#btn-createRequest").prop("disabled",true);
+$("#btn-createASRequest").prop("disabled",true);
+$("#btn-createFWRequest").prop("disabled",true);
 chrome.tabs.query({active: true, currentWindow: true}, 
 			function(tabs){
 				// Get URL of current page
@@ -244,6 +307,8 @@ chrome.tabs.query({active: true, currentWindow: true},
 								if(form == -1){ //So user is already logged into site
 									console.log("huh?")
 									$("#btn-createRequest").prop("disabled",false);
+									$("#btn-createASRequest").prop("disabled",false);
+									$("#btn-createFWRequest").prop("disabled",false);
 								}
 								else{
 									displayAlert("You are logged out of this site", 'alert-danger')
