@@ -201,9 +201,7 @@ function createRequest() {
 						   "&sAppBuild=" + $("#build").text() +
 						   "&sSocleVersion=" + encodeURIComponent($("#asversion").text()) +
 						   "&sSocleBuild=" + $("#asbuild").text();
-			console.log("ffUrl: " + ffUrl);
-			console.log("$('#application').text(): " + $("#application").text());
-			console.log("url: " + urlAppId);
+			
 			//Save application and release info
 			var sAppId = $("#application").text() + " " + $("#release").text();
 			$('#loading').show();
@@ -254,16 +252,16 @@ function createRequest() {
 							newURL = getURLPath("newRequestParams", newURL);
 							if(sAppId != null){
 								localStorage.setItem("CW-appVersion", sAppId);
-							};
+							}
 						}
 						else{
 							var newURL = reqUrl + "&fid=" + nAppId;
 				            newURL = getURLPath("newRequestParams", newURL);
 						};
 					}
-					console.log("Url: " + newURL);
+					
 					//Open request tab
-					//openTab(newURL);
+					openTab(newURL);
 				},
 				error: function(jqXHR, textStatus, errorThrown){
 					alert("Software is down");

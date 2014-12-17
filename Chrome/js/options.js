@@ -12,7 +12,7 @@ function save_options() {
 		console.log('dummy pwd');
 	}
 	var reqParamOption = $('#reqParam').val();
-	localStorage.setItem("CW-urlParams", "yes");
+	localStorage.setItem("CW-urlParams", reqParamOption);
 	
 	saveProductList();
   // Update status to let user know options were saved.
