@@ -243,26 +243,20 @@ function createRequest() {
 						localStorage.setItem("CW-asBuild", $("#asbuild").text());
 
 						//Retrive the hardcoded id from getVersionInfo.js file
-						var nAppId = applicationMapping(sAppId);
+						//var nAppId = applicationMapping(sAppId);
+                        var nAppId = localStorage.getItem(sAppId);
 						if(nAppId == null){
 
 							//If we still don't have an id, just create a regular request and and save the application info
 							var newURL = newReqUrl;
-							if(localStorage.getItem("CW-urlParams") == "yes"){
-								console.log("Params test2");
-								newURL = 	getURLPath("newRequestParams", newURL);
-							}
+							newURL = getURLPath("newRequestParams", newURL);
 							if(sAppId != null){
 								localStorage.setItem("CW-appVersion", sAppId);
 							}
 						}
 						else{
 							var newURL = reqUrl + "&fid=" + nAppId;
-							if(localStorage.getItem("CW-urlParams") == "yes"){
-								console.log("Params test3");
-								newURL = 	getURLPath("newRequestParams", newURL);
-								console.log("newURL: " + newURL);
-							}
+				            newURL = getURLPath("newRequestParams", newURL);
 						};
 					}
 					
