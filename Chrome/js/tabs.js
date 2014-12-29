@@ -234,7 +234,7 @@ function createRequest() {
 						localStorage.setItem("CW-appBuild", $("#build").text());
 						localStorage.setItem("CW-asBuild", $("#asbuild").text());
 
-						//Retrive the hardcoded id from getVersionInfo.js file
+						//Retrieve the hard-coded id from getVersionInfo.js file
 						var nAppId = applicationMapping(sAppId);
 						if(nAppId == null){
 

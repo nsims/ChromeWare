@@ -9,6 +9,9 @@ function applicationMapping(sAppId) {
 		case "AQS 7.0":
 			var ret = 282;
 			break;
+		case "AQS 7.5":
+			var ret = 603;
+			break;
 		case "Waste 6.0":
 			var ret = 351;
 			break;
@@ -20,6 +23,9 @@ function applicationMapping(sAppId) {
 			break;
 		case "RCM 7.0":
 			var ret = 375;
+			break;
+		case "RCM 7.5":
+			var ret = 560;
 			break;
 		case "ACS 6.0":
 			var ret = 383;
@@ -38,6 +44,9 @@ function applicationMapping(sAppId) {
 			break;
 		case "HO 7.2":
 			var ret = 524;
+			break;
+		case "WizFrame 6.0":
+			var ret = 428;
 			break;
 		default:
 			var ret = null;
