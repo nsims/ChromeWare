@@ -1,7 +1,7 @@
 var Logger = function(params){
 	var params = params || {};
-	this.pingUrl = "https://software.enablon.com/Software/go.asp?u=ver&pm=6&aformat=1";
-	this.swUrl = 'https://software.enablon.com/enablon/go.asp?OStId=Software';
+	this.pingUrl = "https://software.enablon.com/Software/?u=ver&pm=6&aformat=1";
+	this.swUrl = 'https://software.enablon.com/enablon/?OStId=Software';
 	this.Crypt = params.Crypt || new LazyCrypt();
 }
 
@@ -43,7 +43,7 @@ Logger.prototype.showLogin = function(inMainTab){
 
 
 Logger.prototype.logoutFromSW = function(){
-	$.post("https://software.enablon.com/Software/go.asp?u=logoff")
+	$.post("https://software.enablon.com/Software/?u=logoff")
 	$("#btn-logout").addClass("hide");
 	$("#btn-login").removeClass("hide");
 }

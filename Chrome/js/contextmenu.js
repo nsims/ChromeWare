@@ -7,7 +7,7 @@ function openRequest(info, tab) {
   var selection = JSON.stringify(info.selectionText);
   var number = selection.replace(/"/g, "");
   if(parseInt(number, 10) > 0){
-    var url = "https://software.enablon.com/Software/go.asp?u=%2FReferent%2FRqtes&rid=" + number;
+    var url = "https://software.enablon.com/Software/?u=%2FReferent%2FRqtes&rid=" + number;
     chrome.tabs.create({ url: url });
   }
 }
@@ -16,7 +16,7 @@ function openRequirement(info, tab) {
   var selection = JSON.stringify(info.selectionText);
   var number = selection.replace(/"/g, "");
   if(parseInt(number, 10) > 0){
-    var url = "https://software.enablon.com/Software/go.asp?u=%2FReferent%2FProreq&rid=" + number;
+    var url = "https://software.enablon.com/Software/?u=%2FReferent%2FProreq&rid=" + number;
     chrome.tabs.create({ url: url });
   }
 }
@@ -26,7 +26,7 @@ function openTestFile(info, tab) {
   var number = selection.replace(/"/g, "");
   var number = number.replace(/FT/g, "");
   if(parseInt(number, 10) > 0){
-    var url = "https://software.enablon.com/Software/go.asp?u=%2FReferent%2FFTs&rid=" + number;
+    var url = "https://software.enablon.com/Software/?u=%2FReferent%2FFTs&rid=" + number;
     chrome.tabs.create({ url: url });
   }
 }
