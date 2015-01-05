@@ -127,6 +127,9 @@ function applicationMapping(sAppId) {
 		case "AutoDeliver 7.2":
 			var ret = 645;
 			break;
+		case "WizFrame 6.0":
+			var ret = 428;
+			break;
 		default:
 			var ret = null;
 			break;
@@ -194,7 +197,10 @@ function mapAppIdToModuleName(appId) {
 			return "BCM";
 			break;
 		case "fw":
-			return "Wizframe";
+			return "WizFrame";
+			break;
+		case "dl":
+			return "AutoDeliver";
 			break;
 		case "dl":
 			return "AutoDeliver";
@@ -274,49 +280,59 @@ $("#btn-createRequest").prop("disabled",true);
 $("#btn-createASRequest").prop("disabled",true);
 $("#btn-createFWRequest").prop("disabled",true);
 chrome.tabs.query({active: true, currentWindow: true}, 
-			function(tabs){
-				// Get URL of current page
-				thisURL = tabs[0].url;
-				
-				var urlPieces = thisURL.split("/");
-				var domain = urlPieces[2];
-				var serverVer = urlPieces[3];
-				var siteId = urlPieces[4];
-				var aspQueryStart = urlPieces[5];
-				var appId = urlPieces[6];
-				var pageId = urlPieces[7];
-				
-				console.log(urlPieces);
-				// Check to make sure this is an enablon site before ajax calls
+	function(tabs){
+		// Get URL of current page
+		thisURL = tabs[0].url;
+		
+		var urlPieces = thisURL.split("/");
+		var domain = urlPieces[2];
+		var serverVer = urlPieces[3];
+		var siteId = urlPieces[4];
+		var aspQueryStart = urlPieces[5];
+		var appId = urlPieces[6];
+		var pageId = urlPieces[7];
+		
+		console.log(urlPieces);
+		// Check to make sure this is an enablon site before ajax calls
+		if(domain.indexOf("enablon") == -1) {
+			return
+		}
+		
+		var domainPieces = domain.split(".");
+		var enablonServer = domainPieces[0];
+	
+	
+		
+		if(["inno", "innous", "inno2"].indexOf(enablonServer) > -1) {	
+			$.get(tabs[0].url,
+				function (data, status) {
+					if(status === 'success') {
+						var form = data.indexOf("LoginForm");
+						if(form == -1){ //So user is already logged into site
+							$("#btn-createRequest").prop("disabled",false);
+						}
+						else{
+							displayAlert("You are logged out of this site", 'alert-danger')
+						}
+					}
+				});
+		}
+	});
+}
 
-				
-				if(domain.indexOf("enablon") == -1) {
-					return
-				}
-				
-				var domainPieces = domain.split(".");
-				var enablonServer = domainPieces[0];
-			
-			
-				
-				if(["inno", "innous", "inno2"].indexOf(enablonServer) > -1) {	
-					$.get(tabs[0].url,
-						function (data, status) {
-							if(status === 'success') {
-								var form = data.indexOf("LoginForm");
-								if(form == -1){ //So user is already logged into site
-									console.log("huh?")
-									$("#btn-createRequest").prop("disabled",false);
-									$("#btn-createASRequest").prop("disabled",false);
-									$("#btn-createFWRequest").prop("disabled",false);
-								}
-								else{
-									displayAlert("You are logged out of this site", 'alert-danger')
-								}
-							}
-						});
-				}
-			});
+function parseURLParams(queryStr, queryStrParams) {
+	// Takes a string from a url and fills the queryStrParams object with "param" -> value pairs from it
+	var parameters = queryStr.split("&");
+	
+	for(var i = 0; i < parameters.length; i++) {
+		var param = parameters[i];
+		var pair = param.split('=');
+		var val = "";
+		if(pair.length == 2) { 
+			val = pair[1]; 
+		};
+		queryStrParams[pair[0]] = val;
+	}
 }
 
 
@@ -324,7 +340,6 @@ function getVersionInfo() {
 
 	var thisURL = null;
 
-	console.log("debug");
 	if(localStorage.getItem("CF-lastwindow") == "create-request"){
 		chrome.tabs.query({active: true, currentWindow: true}, 
 			function(tabs){ 
@@ -333,12 +348,23 @@ function getVersionInfo() {
 				thisURL = tabs[0].url;
 				
 				var urlPieces = thisURL.split("/");
+				var urlPiecesCount = urlPieces.length;
+				
 				var domain = urlPieces[2];
 				var serverVer = urlPieces[3];
 				var siteId = urlPieces[4];
 				var aspQueryStart = urlPieces[5];
-				var appId = urlPieces[6];
-				var pageId = urlPieces[7];
+				
+				var appId;
+				var queryStrParams = {};
+				
+				if(urlPiecesCount > 6){
+					appId = urlPieces[6];
+					if(appId.toLowerCase() == "adm" && urlPiecesCount > 7) {
+						parseURLParams(urlPieces[7], queryStrParams);
+						appId = queryStrParams["bs"];
+					}
+				}
 				
 				console.log(urlPieces);
 				// Check to make sure this is an enablon site before ajax calls
@@ -357,25 +383,9 @@ function getVersionInfo() {
 				
 				if(["inno", "innous", "inno2"].indexOf(enablonServer) > -1) {	
 					// Determine URLs of version pages for this site
-					var basicSiteUrlPieces = urlPieces.slice(0, 6);
-					var verPageUrlStub = basicSiteUrlPieces.join("/");
+					var basicSiteUrlPieces = urlPieces.slice(0, 5);
+					var verPageUrlStub = basicSiteUrlPieces.join("/") + '/?u=';
 					
-					//Many pages when you first log in have no "go.asp" in the URL
-					//but we need that, so we'll process it like it does have it.
-					if(aspQueryStart == "" || aspQueryStart == null){
-						switch (serverVer) {
-							case "Bespin":
-								aspQueryStart = "go.aspx?u=";
-								break;
-							case "Coruscant":
-								aspQueryStart = "go.aspx?u=";
-								break;
-							
-							default:
-								aspQueryStart = "go.asp?u=";
-						}
-						verPageUrlStub = verPageUrlStub + aspQueryStart
-					}
 					var appVerPageUrl = verPageUrlStub + '/ver';
 					var ASVerPageUrl = verPageUrlStub + 'ver';
 					

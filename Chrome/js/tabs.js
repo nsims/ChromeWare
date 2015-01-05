@@ -3,25 +3,17 @@
 // found in the LICENSE file.
 
 
-var sGoAsp = "go.asp";
-var sGoAspU = "go.asp?u=";
-var sGoAspx = "go.aspx";
-var sGoAspxU = "go.aspx?u=";
+var softwareURL = "https://software.enablon.com/Software/?u=/Referent/";
 
-var softwareURL = "https://software.enablon.com/Software/";
+var createRequestURL = "Prods/RqProd&tm=1";
+var newRequestURL = "Rqtes&pm=0&tm=1";
+var fireFixRequestURL = "FFRq&Process=nGetAllElements";
 
-var createRequestURL = "/Referent/Prods/RqProd&tm=1";
-var newRequestURL = "/Referent/Rqtes&pm=0&tm=1";
-var fireFixRequestURL = "/Referent/FFRq&Process=nGetAllElements";
+var reqUrl = softwareURL + createRequestURL;	//URL for prefilled requests
+var ffUrl = softwareURL + fireFixRequestURL;	//URL for firefix's software page to retreive id's
+var newReqUrl = softwareURL + newRequestURL;	//URL for new request creation (outside of version folder)
 
-var reqUrl = softwareURL + sGoAspU + createRequestURL;								//URL for prefilled requests
-var ffUrl = softwareURL + sGoAspU + fireFixRequestURL;								//URL for firefix's software page to retreive id's
-var newReqUrl = softwareURL + sGoAspU + newRequestURL;								//URL for new request creation (outside of version folder)
-
-var index = 1;																		//index for screenshot count
-
-
-
+var index = 1;	//index for screenshot count
 
 
 
