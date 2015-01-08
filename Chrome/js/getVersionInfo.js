@@ -467,6 +467,7 @@ function getURLPath(mode, baseUrl){
 							"&Fld__xml_Description=" + encodeURIComponent(behavior) +
 							"&Fld__xml_URL=" + encodeURIComponent(url) +
 							"&Fld__xml_LoginPassword=" + encodeURIComponent(loginpwd) +
+							"&chromeware=1" + 
 							"&ext=1";
 			break;
 		default: 

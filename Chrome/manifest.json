@@ -3,11 +3,12 @@
 
   "name": "ChromeWare",
   "description": "This extension provides a tool to log requests",
-  "version": "1.0",
+  "version": "1.1",
 
   "permissions": [
 	"activeTab",
 	"tabs",
+	"storage",
 	"http://www.google.com/",
 	"http://promethee.enablon.com/",
 	"https://software.enablon.com/*",
@@ -17,8 +18,8 @@
 	"contextMenus"
   ],
   "background":{
-	"scripts": ["js/main.js", 
-				"js/jquery.js", 
+	"scripts": ["js/jquery.js", 
+				"js/main.js", 
 				"js/tabs.js", 
 				"js/login.js", 
 				"js/crypto/aes.js", 

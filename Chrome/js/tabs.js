@@ -65,73 +65,25 @@ function createTab(id) {
 function injectJavaScript() {
 
 	chrome.tabs.onCreated.addListener(function(tab) {
-		
-		var input = "";
-
-		if(localStorage.getItem("CW-urlParams") == "no"){
-			//This handles the conversion for the dropdown inputs
-			switch (localStorage.getItem("CW-type")){
-							case "Bug": var type = "0"; break;
-							case "Enhancement": var type = "1"; break;
-							case "Product Opening": var type = "2"; break;
-							case "Question": var type = "3"; break;
-							default: var type = "0"};
-			switch (localStorage.getItem("CW-severity")){
-							case "Severe": var severity = "0"; break;
-							case "Major": var severity = "1"; break;
-							case "Minor": var severity = "2"; break;
-							default: var severity = "2"};
-			switch (localStorage.getItem("CW-priority")){
-							case "Immediate": var priority = "0"; break;
-							case "At the earliest": var priority = "1"; break;
-							case "Normal": var priority = "2"; break;
-							case "Later": var priority = "3"; break;
-							default: var priority = "2"};
-			
-			//Retrieves the values of the text fields from localStorage
-			var behavior = localStorage.getItem("CW-behavior");
-			var appBuild = localStorage.getItem("CW-appBuild");
-			var asBuild = localStorage.getItem("CW-asBuild");
-			var asVersion = localStorage.getItem("CW-appVersion");
-			var stepstoreproduce = localStorage.getItem("CW-stepstoreproduce");
-			var title = localStorage.getItem("CW-title");
-			var url = localStorage.getItem("CW-url");
-			var loginpwd = localStorage.getItem("CW-loginpwd");
-
-			//If we cannot get the build of the application and AS, we prepend what we know to the behavior
-			if(appBuild != null && asBuild != null){
-				behavior = behavior + "\n\n\n\n--------------------\n\n";
-				if(asVersion != null){
-					behavior = behavior + "Product: " + asVersion + "\n";
-				};
-				behavior = behavior + "Product Build: " + appBuild + "\nAS Build: " + asBuild;
-			};
-
-			//Create a string of javascript that will be injected into the software page
-			input = 'var type = "' + type + '";' +
-					' var severity = "' + severity + '";' +
-					' var priority = "' + priority + '";' +
-					' var title = "' + title + '";' +
-					' var behavior = "' + behavior.replace(/\n/g, "&sect;") + '";' +
-					' var stepstoreproduce = "' + stepstoreproduce.replace(/\n/g, "&sect;") + '";' +
-					' var url = "' + url + '";' +
-					' var loginpwd = "' + loginpwd + '";';
-						
-		}
-		
+				
 		//We clear the request form			
 		clearRequestAfterCreation();
-
-		//Testing
-		/*console.log("from chromeware");
-		chrome.tabs.executeScript(null, {code: "alert('Hello World')"} );
-		localStorage.setItem("ErrorMsg", tab.id);
-		input = input + ' console.log("come onn")';*/
 		
 		//Inject the scripts
-		chrome.tabs.executeScript(tab.id, {code: input} );
-		chrome.tabs.executeScript(tab.id, {file: 'js/fillRequest.js'});
+		if (tab.url.indexOf("chrome-devtools://") == -1) {
+			localStorage.setItem("tabid", tab.id);
+			chrome.tabs.executeScript(tab.id, {file: "js/fillRequest.js"}, function() {
+				if (chrome.runtime.lastError) {
+					localStorage.setItem("Error", chrome.runtime.lastError.message);
+					console.error(chrome.runtime.lastError.message);
+				}
+				else{
+					localStorage.setItem("Else case", "This should work")
+				}
+			});
+		}
 	});
+	
 }
 
 
@@ -205,7 +157,7 @@ function createRequest() {
 				timeout: 5000,
 				cache: false,
 				success: function(data, textStatus, jqXHR){ //If call is successful
-
+					localStorage.setItem("Please work", "It Does!");
 					//Grab the id's from the page
 					var productId = $('#nGetProduct', data).text();
 					var productBuildId = $('#nGetProductBuild', data).text();
@@ -284,6 +236,7 @@ function takeScreenshot() {
 	link.download = filename + ".jpg";
 	//link.href = imgUrl;
 	link.href = img;
+	localStorage.set("image", img);
 	link.click();
     index++;	
   });
