@@ -84,6 +84,10 @@ function injectJavaScript() {
 		}
 	});
 	
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+		sendResponse({file: localStorage.getItem("image")})
+	});
+	
 }
 
 
@@ -229,10 +233,10 @@ function takeScreenshot() {
   chrome.tabs.captureVisibleTab(null, function(img) {
     var screenshotUrl = img;
 	var viewTabUrl = chrome.extension.getURL('screenshot.html');
-	var filename = localStorage.getItem("CW-filename");	
+	var filename = localStorage.getItem("CW-filename");
 	document.getElementById('details').innerHTML +=index + ": " + filename + '.jpg <br>';
 	var imgUrl = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');		
-	var link = document.createElement("a");	
+	var link = document.createElement("a");
 	link.download = filename + ".jpg";
 	//link.href = imgUrl;
 	link.href = img;
@@ -254,3 +258,10 @@ function clickHandler(e){
 
 	setTimeout(takeScreenshot, 1000);
 }
+
+
+
+
+
+
+
