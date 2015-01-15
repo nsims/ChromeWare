@@ -111,3 +111,24 @@ document.addEventListener('DOMContentLoaded', function ()
 });
 
 chrome.browserAction.setBadgeText({text: "Beta"});
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	//sendResponse({file: localStorage.getItem("image")})
+	var inRequest = sender.tab.url;
+	if(inRequest.indexOf("chromeware=1") > -1)
+		sendResponse({farewell: sender.tab.url});
+	else
+		sendResponse({farewell: "goodbye"});
+});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

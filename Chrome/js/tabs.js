@@ -84,12 +84,6 @@ function injectJavaScript() {
 		}
 	});
 	
-	chrome.runtime.onMessageExternal.addListener(function(request, sender, sendResponse) {
-		//sendResponse({file: localStorage.getItem("image")})
-		if (request.greeting == "hello")
-			sendResponse({farewell: "goodbye"});
-	});
-	
 }
 
 

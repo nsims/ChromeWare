@@ -1,8 +1,8 @@
-console.log("Hello World");
 
-//chrome.runtime.sendMessage({greeting: "hello"}, function(response){
-//	var file = response.farewell;
-//	//alert(file);
+chrome.runtime.sendMessage({greeting: "hello"}, function(response){
+	var file = response.farewell;
+	if(file != "goodbye")
+		alert(file);
 //	var sFileName = "Image";
 //	 var boundaryString = '---------------------------132611019532525';
 //	 var boundary = '--' + boundaryString;
@@ -27,4 +27,5 @@ console.log("Hello World");
 //	//http_request.setRequestHeader("Connection", "close");
 //	 http_request.setRequestHeader("Content-length", requestbody.length);
 //	 http_request.sendAsBinary(requestbody);
-//});
+});
+
