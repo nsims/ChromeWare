@@ -84,8 +84,10 @@ function injectJavaScript() {
 		}
 	});
 	
-	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-		sendResponse({file: localStorage.getItem("image")})
+	chrome.runtime.onMessageExternal.addListener(function(request, sender, sendResponse) {
+		//sendResponse({file: localStorage.getItem("image")})
+		if (request.greeting == "hello")
+			sendResponse({farewell: "goodbye"});
 	});
 	
 }
@@ -240,7 +242,7 @@ function takeScreenshot() {
 	link.download = filename + ".jpg";
 	//link.href = imgUrl;
 	link.href = img;
-	localStorage.set("image", img);
+	localStorage.setItem("image", img);
 	link.click();
     index++;	
   });
