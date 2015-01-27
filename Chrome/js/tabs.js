@@ -72,7 +72,7 @@ function injectJavaScript() {
 		//Inject the scripts
 		if (tab.url.indexOf("chrome-devtools://") == -1) {
 			localStorage.setItem("tabid", tab.id);
-			chrome.tabs.executeScript(tab.id, {file: "js/fillRequest.js"}, function() {
+			chrome.tabs.executeScript(tab.id, {code: "localStorage.setItem('image', '" + localStorage.getItem("image") + "');console.log('image:' + localStorage.getItem('image'))"}, function() {
 				if (chrome.runtime.lastError) {
 					localStorage.setItem("Error", chrome.runtime.lastError.message);
 					console.error(chrome.runtime.lastError.message);
