@@ -29,7 +29,8 @@
 				"js/screenshottabs.js", 
 				"js/getVersionInfo.js",
 				"js/eventPage.js",
-				"js/contextmenu.js"]
+				"js/contextmenu.js",
+				"js/screenshot.js"]
   },
   "content_scripts": [
     {

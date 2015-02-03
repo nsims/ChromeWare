@@ -65,22 +65,24 @@ function createTab(id) {
 function injectJavaScript() {
 
 	chrome.tabs.onCreated.addListener(function(tab) {
-				
-		//We clear the request form			
-		clearRequestAfterCreation();
-		
-		//Inject the scripts
-		if (tab.url.indexOf("chrome-devtools://") == -1) {
-			localStorage.setItem("tabid", tab.id);
-			chrome.tabs.executeScript(tab.id, {code: "localStorage.setItem('image', '" + localStorage.getItem("image") + "');console.log('image:' + localStorage.getItem('image'))"}, function() {
-				if (chrome.runtime.lastError) {
-					localStorage.setItem("Error", chrome.runtime.lastError.message);
-					console.error(chrome.runtime.lastError.message);
-				}
-				else{
-					localStorage.setItem("Else case", "This should work")
-				}
-			});
+		var url = tab.url;
+		if(url.indexOf("enablon") > 0){
+			//We clear the request form
+			clearRequestAfterCreation();
+			
+			//Inject the scripts
+			if (tab.url.indexOf("chrome-devtools://") == -1) {
+				localStorage.setItem("tabid", tab.id);
+				chrome.tabs.executeScript(tab.id, {code: "localStorage.setItem('image', '" + localStorage.getItem("image") + "');console.log('image:' + localStorage.getItem('image'))"}, function() {
+					if (chrome.runtime.lastError) {
+						localStorage.setItem("Error", chrome.runtime.lastError.message);
+						console.error(chrome.runtime.lastError.message);
+					}
+					else{
+						localStorage.setItem("Else case", "This should work")
+					}
+				});
+			}
 		}
 	});
 	
@@ -118,6 +120,8 @@ function clearRequestAfterCreation(){
 		localStorage.setItem("CF-lastsection", 'collapseOne');	
 		//reset window
 		localStorage.setItem("CF-lastwindow", "main");
+		
+		clearScreenshots();
 }
 
 
@@ -150,7 +154,7 @@ function createRequest() {
 			var sAppId = $("#application").text() + " " + $("#release").text();
 			$('#loading').show();
 
-			///Make the ajax call to firefix software page
+			//Make the ajax call to firefix software page
 			$.ajax({
 				url: urlAppId,
 				type: 'GET',
@@ -203,7 +207,7 @@ function createRequest() {
 				            newURL = getURLPath("newRequestParams", newURL);
 						};
 					}
-					
+					downloadScreenshots();
 					//Open request tab
 					openTab(newURL);
 				},
@@ -215,46 +219,6 @@ function createRequest() {
 	}
 
 }
-
-
-
-
-
-/*
-	takeScreenshot
-	@desc: 		Takes a screenshot of the current tab
-	@author: Yiwen Wang
-*/
-function takeScreenshot() {
-  chrome.tabs.captureVisibleTab(null, function(img) {
-    var screenshotUrl = img;
-	var viewTabUrl = chrome.extension.getURL('screenshot.html');
-	var filename = localStorage.getItem("CW-filename");
-	document.getElementById('details').innerHTML +=index + ": " + filename + '.jpg <br>';
-	var imgUrl = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');		
-	var link = document.createElement("a");
-	link.download = filename + ".jpg";
-	//link.href = imgUrl;
-	link.href = img;
-	localStorage.setItem("image", img);
-	link.click();
-    index++;	
-  });
-}
-
-
-
-
-/*
-	clickHandler
-	@desc: 		Click handler for the screenshot function
-	@author: Yiwen Wang
-*/
-function clickHandler(e){	
-
-	setTimeout(takeScreenshot, 1000);
-}
-
 
 
 

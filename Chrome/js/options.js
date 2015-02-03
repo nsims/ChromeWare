@@ -1,6 +1,7 @@
 // Saves options to localStorage.
 function save_options() {
  //############
+	console.log("it works");
 	var swLoginInput = $('#SWLogin');
 	var swPwdInput = $('#SWPwd');
 	if(!(swPwdInput.val()=="GoodTry ;)")){
@@ -15,12 +16,13 @@ function save_options() {
 	localStorage.setItem("CW-urlParams", reqParamOption);
 	
 	saveProductList();
-  // Update status to let user know options were saved.
-  var status = document.getElementById("status");
-  status.innerHTML = "Options Saved.";
-  setTimeout(function() {
-    status.innerHTML = "";
-  }, 750);
+	// Update status to let user know options were saved.
+	displayAlert("Options Saved", "alert-success")
+	// var status = document.getElementById("status");
+	// status.innerHTML = "Options Saved.";
+	setTimeout(function() {
+		$("#alert_placeholder").children().remove()
+	}, 2000);
 }
 
 // Restores select box state to saved value from localStorage.
@@ -149,6 +151,23 @@ function saveProductList(){
 		}
 	);
 	localStorage.setItem("Products", updatedProduct.join("§"));
+}
+
+
+/*
+	displayAlert
+	@desc: 		Displays a message to the user through a hovering alert
+	@param 	string message - 	the message to display
+			type string - 		the type of message to display (warning, error, success, etc)
+	@author: Raphael Bourgeois
+*/
+function displayAlert(message, type) 
+{
+	var type = type || 'alert-danger';
+	$('#alert_placeholder').html('<div class="alert '+
+									type +
+									' fade in alert-dismissible" role="alert"> ' +
+									'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+message+'</div>')
 }
 
 

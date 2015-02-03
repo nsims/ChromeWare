@@ -3,6 +3,16 @@ body {
   padding-top: 20px;
 }
 
+.options-alert{
+  position: absolute;
+  text-align:center;
+  width:50%;
+  margin-left: auto;
+  margin-right: auto;
+  left:0;
+  right:0;
+}
+
 .panel {
   margin-bottom: 20px;
   background-color: transparent;

@@ -46,6 +46,8 @@ function fillFields()
 	$('#asbuild').html(localStorage.getItem("CW-asBuild"));
 	$('#asversion').html(localStorage.getItem("CW-asRelease"));
 	
+	fillImages();
+	
 }
 
 
@@ -97,6 +99,8 @@ function clearFields()
 		localStorage.removeItem("CW-application");
 		localStorage.removeItem("CW-asBuild");
 		localStorage.removeItem("CW-asRelease");
+		
+		clearScreenshots();
 	};
 }
 
@@ -164,4 +168,18 @@ function removeValidation()
 	});
 	$('#sectionerror').remove();
 	
+}
+
+function fillImages(){
+	var images = localStorage.getItem("images");
+	if(images != null){
+		var imagesArray = images.split("§");
+		for(var i=0;i < imagesArray.length; i++){
+			var filename = imagesArray[i];
+			var img = localStorage.getItem(filename);
+			$("#details").append("<a target=\"_blank\" href=\"" + img + "\" name=" + filename + ">" + (i + 1) + ": " + filename + ".jpg</a><br>");
+			//document.getElementById('details').innerHTML +=index + ": " + imagesArray[i] + '.jpg <br>';
+		}
+	}
+
 }
