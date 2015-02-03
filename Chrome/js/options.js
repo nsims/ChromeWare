@@ -64,10 +64,10 @@ function initializedProductList(){
 		var id = localStorage.getItem("" + version);
 		$("#productForm").append(
 				  "<div style='margin-bottom: 5px;' title='product'>" +
-					  "<button type='button' class='btn btn-danger btn-sm remove' style='margin-right: 5px;'>" +
+					  "<button type='button' class='btn btn-danger btn-sm remove'>" +
 						"<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
 					  "</button>" +
-					  "<div class='form-group'>" +
+					  "<div class='form-group' style='margin: 1px;'>" +
 						"<div class='col-sm-10'>" +
 						  "<input type='text' class='form-control input' id='versionName' changed=false placeholder='Product' origvalue='" + version + "' value='" + version + "'>" +
 						"</div>" +
@@ -89,10 +89,10 @@ function removeVersion(){
 function addVersion(){
 	$("#productForm").append(
 				  "<div style='margin-bottom: 5px;' title='product'>" +
-					  "<button type='button' class='btn btn-danger btn-sm remove' style='margin-right: 5px;'>" +
+					  "<button type='button' class='btn btn-danger btn-sm remove'>" +
 						"<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>" +
 					  "</button>" +
-					  "<div class='form-group'>" +
+					  "<div class='form-group' style='margin: 1px;'>" +
 						"<div class='col-sm-10'>" +
 						  "<input type='text' class='form-control input' id='versionName' placeholder='Product' changed=false>" +
 						"</div>" +
