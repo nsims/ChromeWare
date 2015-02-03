@@ -59,7 +59,7 @@ function restore_options() {
 }
 
 function initializedProductList(){
-	var products = localStorage.getItem("Products").split("§");
+	var products = localStorage.getItem("Products").split("&&");
 	var count;
 	for(count in products){
 		var version = products[count];
@@ -150,7 +150,7 @@ function saveProductList(){
 			}
 		}
 	);
-	localStorage.setItem("Products", updatedProduct.join("§"));
+	localStorage.setItem("Products", updatedProduct.join("&&"));
 }
 
 

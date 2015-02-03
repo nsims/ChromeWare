@@ -173,7 +173,7 @@ function removeValidation()
 function fillImages(){
 	var images = localStorage.getItem("images");
 	if(images != null){
-		var imagesArray = images.split("§");
+		var imagesArray = images.split("&&");
 		for(var i=0;i < imagesArray.length; i++){
 			var filename = imagesArray[i];
 			var img = localStorage.getItem(filename);

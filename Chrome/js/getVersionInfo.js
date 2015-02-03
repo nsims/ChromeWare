@@ -59,7 +59,7 @@ function initializeVersions(){
 	localStorage.setItem("AutoDeliver 7.2", 645);
 	products.push("AutoDeliver 7.2");
 	
-	localStorage.setItem("Products", products.join("§"));
+	localStorage.setItem("Products", products.join("&&"));
 }
 
 function applicationMapping(sAppId) {
