@@ -107,6 +107,7 @@ function addVersion(){
 				  "</div>");
 	$('.remove').click(removeVersion);
 	$('.input').change(addChangeAttr);
+	$("html, body").animate({ scrollTop: $(document).height() }, 1000);
 
 }
 
@@ -151,6 +152,7 @@ function saveProductList(){
 		}
 	);
 	localStorage.setItem("Products", updatedProduct.join("&&"));
+	$("html, body").animate({ scrollTop: 0 }, 500);
 }
 
 

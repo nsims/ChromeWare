@@ -97,7 +97,7 @@ function displayAlert(message, type)
 	var type = type || 'alert-danger';
 	$('#alert_placeholder').html('<div class="alert '+
 									type +
-									' fade in" style="position:absolute; margin-left:35px; margin-right:35px;' +
+									' fade in" style="position:absolute; margin-left:35px; margin-right:35px; margin-top:10px;' +
 									' padding-top:0px !important; padding-bottom:0px !important; width:80%;">' +
 									'<a class="close" data-dismiss="alert">x</a><span>'+message+'</span></div>')
 }
