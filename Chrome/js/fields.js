@@ -17,6 +17,10 @@ function rememberFields()
 		var fieldValue = $(this).val();
 		localStorage.setItem("CW-" + fieldId, fieldValue);
 	});
+	$("input:radio").click(function(){
+		console.log("layer checked");
+		localStorage.setItem("CW-impactLayer", $(this).val())
+	});
 }
 
 
@@ -38,6 +42,10 @@ function fillFields()
 			$(this).val(fieldValue);
 		}
 	});
+	
+	var productLayerId = localStorage.getItem("CW-impactLayer");
+	if(productLayerId != null)
+		$("#" + productLayerId).prop("checked", "checked");
 
 	//Fills in the site info from local storage
 	$('#release').html(localStorage.getItem("CW-release"));
@@ -83,7 +91,9 @@ function clearFields()
 			};
 			localStorage.removeItem("CW-" + fieldId);
 		});
-
+		$("#productLayer").prop("checked", "checked");
+		localStorage.removeItem("CW-impactLayer")
+		
 		//Removes any validations the user did not meet
 		removeValidation();
 

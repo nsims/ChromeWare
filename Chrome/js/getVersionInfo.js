@@ -2,64 +2,66 @@
 // inspired by RetrieveAppInfo.js by the FireFix team
 
 function initializeVersions(){
-	var products = [];
-	//AQS
-	localStorage.setItem("AQS 6.0", 343);
-	products.push("AQS 6.0");
-	localStorage.setItem("AQS 7.0", 282);
-	products.push("AQS 7.0");
-	localStorage.setItem("AQS 7.2", 539);
-	products.push("AQS 7.2");
-	localStorage.setItem("AQS 7.5", 603);
-	products.push("AQS 7.5");
-	
-	//WMS
-	localStorage.setItem("Waste 6.0", 351);
-	products.push("Waste 6.0");
-	localStorage.setItem("Waste 7.0", 388);
-	products.push("Waste 7.0");
-	localStorage.setItem("Waste 7.2", 565);
-	products.push("Waste 7.2");
-	localStorage.setItem("Waste 7.5", 566);
-	products.push("Waste 7.5");
-	
-	//RCM
-	localStorage.setItem("RCM 6.0", 344);
-	products.push("RCM 6.0");
-	localStorage.setItem("RCM 7.0", 375);
-	products.push("RCM 7.0");
-	localStorage.setItem("RCM 7.2", 535);
-	products.push("RCM 7.2");
-	localStorage.setItem("RCM 7.5", 560);
-	products.push("RCM 7.5");
-	
-	//ACS
-	localStorage.setItem("ACS 6.0", 383);
-	products.push("ACS 6.0");
-	localStorage.setItem("ACS 7.0", 414);
-	products.push("ACS 7.0");
-	localStorage.setItem("ACS 7.2", 554);
-	products.push("ACS 7.2");
-	localStorage.setItem("ACS 7.5", 561);
-	products.push("ACS 7.5");
-	
-	//CMS
-	localStorage.setItem("CMS 6.0", 350);
-	products.push("CMS 6.0");
-	localStorage.setItem("CMS 7.0", 415);
-	products.push("CMS 7.0");
-	
-	//HO
-	localStorage.setItem("HO 7.0", 347);
-	products.push("HO 7.0");
-	localStorage.setItem("HO 7.2", 524);
-	products.push("HO 7.2");
+	if(localStorage.getItem("Products") == null){
+		var products = [];
+		//AQS
+		localStorage.setItem("AQS 6.0", 343);
+		products.push("AQS 6.0");
+		localStorage.setItem("AQS 7.0", 282);
+		products.push("AQS 7.0");
+		localStorage.setItem("AQS 7.2", 539);
+		products.push("AQS 7.2");
+		localStorage.setItem("AQS 7.5", 603);
+		products.push("AQS 7.5");
+		
+		//WMS
+		localStorage.setItem("Waste 6.0", 351);
+		products.push("Waste 6.0");
+		localStorage.setItem("Waste 7.0", 388);
+		products.push("Waste 7.0");
+		localStorage.setItem("Waste 7.2", 565);
+		products.push("Waste 7.2");
+		localStorage.setItem("Waste 7.5", 566);
+		products.push("Waste 7.5");
+		
+		//RCM
+		localStorage.setItem("RCM 6.0", 344);
+		products.push("RCM 6.0");
+		localStorage.setItem("RCM 7.0", 375);
+		products.push("RCM 7.0");
+		localStorage.setItem("RCM 7.2", 535);
+		products.push("RCM 7.2");
+		localStorage.setItem("RCM 7.5", 560);
+		products.push("RCM 7.5");
+		
+		//ACS
+		localStorage.setItem("ACS 6.0", 383);
+		products.push("ACS 6.0");
+		localStorage.setItem("ACS 7.0", 414);
+		products.push("ACS 7.0");
+		localStorage.setItem("ACS 7.2", 554);
+		products.push("ACS 7.2");
+		localStorage.setItem("ACS 7.5", 561);
+		products.push("ACS 7.5");
+		
+		//CMS
+		localStorage.setItem("CMS 6.0", 350);
+		products.push("CMS 6.0");
+		localStorage.setItem("CMS 7.0", 415);
+		products.push("CMS 7.0");
+		
+		//HO
+		localStorage.setItem("HO 7.0", 347);
+		products.push("HO 7.0");
+		localStorage.setItem("HO 7.2", 524);
+		products.push("HO 7.2");
 
-	//AutoDeliver 7.2
-	localStorage.setItem("AutoDeliver 7.2", 645);
-	products.push("AutoDeliver 7.2");
-	
-	localStorage.setItem("Products", products.join("&&"));
+		//AutoDeliver 7.2
+		localStorage.setItem("AutoDeliver 7.2", 645);
+		products.push("AutoDeliver 7.2");
+		
+		localStorage.setItem("Products", products.join("&&"));
+	}
 }
 
 function applicationMapping(sAppId) {
@@ -438,6 +440,10 @@ function getURLPath(mode, baseUrl){
 							case "Normal": var priority = "3"; break;
 							case "Later": var priority = "4"; break;
 							default: var priority = "3"};
+			switch (localStorage.getItem("CW-impactLayer")){
+							case "productLayer": var impactLayer = "2"; break;
+							case "asLayer": var impactLayer = "1"; break;
+							default: var impactLayer = "2"};
 			//Retrieves the values of the text fields from localStorage
 			var behavior = localStorage.getItem("CW-behavior");
 			var appBuild = localStorage.getItem("CW-appBuild");
@@ -447,6 +453,10 @@ function getURLPath(mode, baseUrl){
 			var title = localStorage.getItem("CW-title");
 			var url = localStorage.getItem("CW-url");
 			var loginpwd = localStorage.getItem("CW-loginpwd");
+			if(impactLayer == "1")
+				var ASRD = "&Fld__xml_Ressource=AS%20RD§AS%20RD&Fld__xml_EditAssignedTo=2";
+			else
+				var ASRD = "";
 
 
 			//If we cannot get the build of the application and AS, we prepend what we know to the behavior
@@ -467,6 +477,8 @@ function getURLPath(mode, baseUrl){
 							"&Fld__xml_Description=" + encodeURIComponent(behavior) +
 							"&Fld__xml_URL=" + encodeURIComponent(url) +
 							"&Fld__xml_LoginPassword=" + encodeURIComponent(loginpwd) +
+							"&Fld__xml_ImpactedLayer=" + impactLayer +
+							ASRD +
 							"&chromeware=1" + 
 							"&ext=1";
 			break;

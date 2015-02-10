@@ -109,7 +109,9 @@ function clearRequestAfterCreation(){
 		localStorage.removeItem("CW-title");		
 		localStorage.removeItem("CW-stepstoreproduce");		
 		localStorage.removeItem("CW-url");		
-		localStorage.removeItem("CW-loginpwd");	
+		localStorage.removeItem("CW-loginpwd");
+		localStorage.removeItem("CW-impactLayer");
+		
 		//reset section
 		$('#collapseOne').addClass('in');
 		$('#collapseOne').css({height: 'auto'});
@@ -207,6 +209,7 @@ function createRequest() {
 				            newURL = getURLPath("newRequestParams", newURL);
 						};
 					}
+					
 					downloadScreenshots();
 					//Open request tab
 					openTab(newURL);

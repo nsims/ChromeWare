@@ -135,7 +135,9 @@ function saveProductList(){
 					updatedProduct.push("" + $(versionElement).val());
 				}
 				else{
-					if(localStorage.getItem("" + $(versionElement).val()) == null){
+					if(localStorage.getItem("" + $(versionElement).val()) == null &&
+					   $(versionElement).val() != ""){
+					   
 						console.log("Item set: " + $(versionElement).val());
 						localStorage.setItem("" + $(versionElement).val(), $(idElement).val());
 						updatedProduct.push("" + $(versionElement).val());
