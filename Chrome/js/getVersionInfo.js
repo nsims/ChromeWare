@@ -2,7 +2,9 @@
 // inspired by RetrieveAppInfo.js by the FireFix team
 
 function initializeVersions(){
-	if(localStorage.getItem("Products") == null){
+	console.log("Should initialize...");
+	if(localStorage.getItem("Products") == null || localStorage.getItem("Products") == ""){
+		console.log("inializing products...");
 		var products = [];
 		//AQS
 		localStorage.setItem("AQS 6.0", 343);

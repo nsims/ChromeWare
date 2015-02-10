@@ -18,19 +18,19 @@
 	"contextMenus"
   ],
   "background":{
-	"scripts": ["js/jquery.js", 
-				"js/main.js", 
+	"scripts": ["js/jquery.js",
+				"js/getVersionInfo.js",
 				"js/tabs.js", 
 				"js/login.js", 
 				"js/crypto/aes.js", 
 				"js/crypto/cryptoJSFormatter.js", 
 				"js/crypto/lazyCrypt.js", 
 				"js/crypto/md5.js", 
-				"js/screenshottabs.js", 
-				"js/getVersionInfo.js",
+				"js/screenshottabs.js",
 				"js/eventPage.js",
 				"js/contextmenu.js",
-				"js/screenshot.js"]
+				"js/screenshot.js",
+				"js/main.js"]
   },
   "content_scripts": [
     {

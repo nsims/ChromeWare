@@ -178,6 +178,7 @@ function displayAlert(message, type)
 // Run scripts as soon as the document's DOM is ready.
 document.addEventListener('DOMContentLoaded', function () 
 {
+	initializeVersions();
 	restore_options();
 	initializedProductList();
 	$('#save').click(save_options);
