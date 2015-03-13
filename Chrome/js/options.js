@@ -14,8 +14,8 @@ function save_options() {
 	}
 	var reqParamOption = $('#reqParam').val();
 	localStorage.setItem("CW-urlParams", reqParamOption);
-	
-	saveProductList();
+	if($("#productsTab").hasClass("active"))
+		saveProductList();
 	// Update status to let user know options were saved.
 	displayAlert("Options Saved", "alert-success")
 	// var status = document.getElementById("status");

@@ -15,33 +15,35 @@ function takeScreenshot() {
   chrome.tabs.captureVisibleTab(null, function(img) {
     var screenshotUrl = img;
 	var viewTabUrl = chrome.extension.getURL('screenshot.html');
-	var filename = localStorage.getItem("CW-filename");
-	//document.getElementById('details').innerHTML +=index + ": " + filename + '.jpg <br>';
-	var imgUrl = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');		
-	var link = document.createElement("a");
-	link.download = filename + ".jpg";
-	//link.href = imgUrl;
-	link.href = img;
+	var filename = $("#filename").val();
 	
-	var imagesString = localStorage.getItem("images");
-	if(imagesString != null){
-		var i = 2;
-		while(localStorage.getItem(filename) != null){
-			filename = filename + i;
-			i++
-		};
-		imagesString = imagesString + "&&" + filename;
+	if(filename != ""){
+		var imgUrl = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');		
+		var link = document.createElement("a");
+		link.download = filename + ".jpg";
+		//link.href = imgUrl;
+		link.href = img;
+		
+		var imagesString = localStorage.getItem("images");
+		if(imagesString != null){
+			var i = 2;
+			while(localStorage.getItem(filename) != null){
+				filename = filename + i;
+				i++
+			};
+			imagesString = imagesString + "&&" + filename;
+		}
+		else
+			imagesString = filename;
+		
+		var imageArray = imagesString.split("&&");
+		
+		localStorage.setItem("images", imagesString);
+		localStorage.setItem(filename, img);
+		$("#details").append("<a class=\"screenshot\" target=\"_blank\" href=\"" + img + "\" name=" + filename + ">" + imageArray.length + ": " + filename + ".jpg</a><br class=\"screenshot\">");
+		//link.click();
+		index++;	
 	}
-	else
-		imagesString = filename;
-	
-	var imageArray = imagesString.split("&&");
-	
-	localStorage.setItem("images", imagesString);
-	localStorage.setItem(filename, img);
-	$("#details").append("<a class=\"screenshot\" target=\"_blank\" href=\"" + img + "\" name=" + filename + ">" + imageArray.length + ": " + filename + ".jpg</a><br class=\"screenshot\">");
-	//link.click();
-    index++;	
   });
 }
 

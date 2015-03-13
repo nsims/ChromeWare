@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 
-var softwareURL = "https://software.enablon.com/Software/?u=/Referent/";
+var softwareURL = "https://software.enablon.com/Software/go.aspx?u=/Referent/";
 
 var createRequestURL = "Prods/RqProd&tm=1";
 var newRequestURL = "Rqtes&pm=0&tm=1";
@@ -71,18 +71,18 @@ function injectJavaScript() {
 			clearRequestAfterCreation();
 			
 			//Inject the scripts
-			if (tab.url.indexOf("chrome-devtools://") == -1) {
-				localStorage.setItem("tabid", tab.id);
-				chrome.tabs.executeScript(tab.id, {code: "localStorage.setItem('image', '" + localStorage.getItem("image") + "');console.log('image:' + localStorage.getItem('image'))"}, function() {
-					if (chrome.runtime.lastError) {
-						localStorage.setItem("Error", chrome.runtime.lastError.message);
-						console.error(chrome.runtime.lastError.message);
-					}
-					else{
-						localStorage.setItem("Else case", "This should work")
-					}
-				});
-			}
+			// if (tab.url.indexOf("chrome-devtools://") == -1) {
+				// localStorage.setItem("tabid", tab.id);
+				// chrome.tabs.executeScript(tab.id, {code: "localStorage.setItem('image', '" + localStorage.getItem("image") + "');console.log('image:' + localStorage.getItem('image'))"}, function() {
+					// if (chrome.runtime.lastError) {
+						// localStorage.setItem("Error", chrome.runtime.lastError.message);
+						// console.error(chrome.runtime.lastError.message);
+					// }
+					// else{
+						// localStorage.setItem("Else case", "This should work")
+					// }
+				// });
+			// }
 		}
 	});
 	
