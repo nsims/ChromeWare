@@ -4,7 +4,7 @@
 function initializeVersions(){
 	console.log("Should initialize...");
 	if(localStorage.getItem("Products") == null || localStorage.getItem("Products") == ""){
-		console.log("inializing products...");
+		console.log("initializing products...");
 		var products = [];
 		//AQS
 		localStorage.setItem("AQS 6.0", 343);
@@ -290,15 +290,15 @@ chrome.tabs.query({active: true, currentWindow: true},
 		
 		var urlPieces = thisURL.split("/");
 		var domain = urlPieces[2];
-		var serverVer = urlPieces[3];
-		var siteId = urlPieces[4];
-		var aspQueryStart = urlPieces[5];
-		var appId = urlPieces[6];
-		var pageId = urlPieces[7];
+		// var serverVer = urlPieces[3];
+		// var siteId = urlPieces[4];
+		// var aspQueryStart = urlPieces[5];
+		// var appId = urlPieces[6];
+		// var pageId = urlPieces[7];
 		
 		console.log(urlPieces);
-		// Check to make sure this is an enablon site before ajax calls
-		if(domain.indexOf("enablon") == -1) {
+		// Check to make sure this is an enablon site (or at least localhost) before ajax calls
+		if(domain.indexOf("enablon") == -1 && domain.indexOf("localhost") == -1) {
 			return
 		}
 		
@@ -307,7 +307,7 @@ chrome.tabs.query({active: true, currentWindow: true},
 	
 	
 		
-		if(["inno", "innous", "inno2"].indexOf(enablonServer) > -1) {	
+		if(["inno", "innous", "inno2", "localhost"].indexOf(enablonServer) > -1) {	
 			$.get(tabs[0].url,
 				function (data, status) {
 					if(status === 'success') {
@@ -352,20 +352,35 @@ function getVersionInfo() {
 				thisURL = tabs[0].url;
 				
 				var urlPieces = thisURL.split("/");
+				console.log("urlPieces = " + urlPieces);
 				var urlPiecesCount = urlPieces.length;
 				
 				var domain = urlPieces[2];
-				var serverVer = urlPieces[3];
-				var siteId = urlPieces[4];
-				var aspQueryStart = urlPieces[5];
+				var serverVerIndex, siteIdIndex, aspQueryStartIndex, appIdIndex, urlParamsIndex;
+				if(domain === 'localhost'){
+					siteIdIndex = 3;
+					aspQueryStartIndex = 4;
+					appIdIndex = 5;
+					urlParamsIndex = 6;
+				} else {
+					serverVerIndex = 3;
+					var serverVer = urlPieces[serverVerIndex]; //serverVer not applicable for localhost
+					siteIdIndex = 4;
+					aspQueryStartIndex = 5;
+					appIdIndex = 6;
+					urlParamsIndex = 7;
+				}
+				
+				var siteId = urlPieces[siteIdIndex];
+				var aspQueryStart = urlPieces[aspQueryStartIndex];
 				
 				var appId;
 				var queryStrParams = {};
 				
-				if(urlPiecesCount > 6){
-					appId = urlPieces[6];
-					if(appId.toLowerCase() == "adm" && urlPiecesCount > 7) {
-						parseURLParams(urlPieces[7], queryStrParams);
+				if(urlPiecesCount > appIdIndex){
+					appId = urlPieces[appIdIndex];
+					if(appId.toLowerCase() == "adm" && urlPiecesCount > urlParamsIndex) {
+						parseURLParams(urlPieces[urlParamsIndex], queryStrParams);
 						appId = queryStrParams["bs"];
 					}
 				}
@@ -376,7 +391,7 @@ function getVersionInfo() {
 				$('#url').val(thisURL);
 				localStorage.setItem("CW-url", thisURL);
 				
-				if(domain.indexOf("enablon") == -1) {
+				if(domain.indexOf("enablon") == -1 && domain.indexOf("localhost") == -1) {
 					return
 				}
 				
@@ -385,9 +400,9 @@ function getVersionInfo() {
 			
 			
 				
-				if(["inno", "innous", "inno2"].indexOf(enablonServer) > -1) {	
+				if(["inno", "innous", "inno2", "localhost"].indexOf(enablonServer) > -1) {	
 					// Determine URLs of version pages for this site
-					var basicSiteUrlPieces = urlPieces.slice(0, 5);
+					var basicSiteUrlPieces = urlPieces.slice(0, aspQueryStartIndex);
 					var verPageUrlStub = basicSiteUrlPieces.join("/") + '/?u=';
 					
 					var appVerPageUrl = verPageUrlStub + '/ver';

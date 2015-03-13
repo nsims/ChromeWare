@@ -11,7 +11,7 @@ function initializeButtonClicks()
 	//Set up button actions
 	$("#btn-documentation").click(newTab("btn-documentation"));						//Opens a tab for the documentation
 	$("#btn-createRequest").click(switchWindow("btn-createRequest"));				//Switches to the request creation form
-	$("#btn-cancel").click(resetSection());											//Resets the collapsable sections
+	$("#btn-cancel").click(resetSection());											//Resets the collapsible sections
 	$("#btn-cancel").click(switchWindow("btn-cancel"));								//Switches back to the main view of the popup
 	$("#btn-cancel").click(function(){$("#btn-create").prop("disabled",false);});	//
 	$("#btn-cancelLogin").click(function(){logger.hideLogin()});					//Hides login page, and see main view
@@ -73,7 +73,7 @@ function main()
 
 
 
-	//Intializes all the buttoms and their callbacks
+	//Initializes all the buttons and their callbacks
 	initializeButtonClicks();
 
 	checkPlatformSession();
@@ -82,7 +82,7 @@ function main()
 	dynamicPopover();						//Enables the popover for each field in the request form
 	fillFields();							//Fills the fields with remembered values (if user leaves popup in the middle of creation)
 	rememberFields();						//Remembers the fields user has inputted
-	//getVersionInfo();						//Retrieves the version info of the page
+	getVersionInfo();						//Retrieves the version info of the page
 
 }
 

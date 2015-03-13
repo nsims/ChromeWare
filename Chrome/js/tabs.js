@@ -1,4 +1,4 @@
-// ChromWare Team - Enablon NA
+// ChromeWare Team - Enablon NA
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -10,7 +10,7 @@ var newRequestURL = "Rqtes&pm=0&tm=1";
 var fireFixRequestURL = "FFRq&Process=nGetAllElements";
 
 var reqUrl = softwareURL + createRequestURL;	//URL for prefilled requests
-var ffUrl = softwareURL + fireFixRequestURL;	//URL for firefix's software page to retreive id's
+var ffUrl = softwareURL + fireFixRequestURL;	//URL for firefix's software page to retrieve id's
 var newReqUrl = softwareURL + newRequestURL;	//URL for new request creation (outside of version folder)
 
 var index = 1;	//index for screenshot count
@@ -33,7 +33,7 @@ function newTab(id) {
 
 /*
 	openTab
-	@desc: 		Opens a new tab in the Chome's tab action
+	@desc: 		Opens a new tab in the Chrome's tab action
 	@param 	string url - 	url of the page user wants to open
 	@author: Parth Narielwala
 */
@@ -92,7 +92,7 @@ function injectJavaScript() {
 
 /*
 	clearRequestAfterCreation
-	@desc: 		Clears the request form after prefilling the softare request
+	@desc: 		Clears the request form after prefilling the software request
 	@author: Parth Narielwala
 */
 function clearRequestAfterCreation(){
