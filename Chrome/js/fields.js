@@ -181,6 +181,21 @@ function removeValidation()
 }
 
 function fillImages(){
+	var objImages = JSON.parse(localStorage.getItem("Images"));
+	if(objImages != null){
+		var images = Object.keys(objImages);
+		var inc;
+		for(inc in images){
+			var filename = images[inc];
+			var img = objImages[filename];
+			$("#details").append("<a target=\"_blank\" href=\"" + img + "\" name=" + filename + ">" + (Number(inc) + 1) + ": " + filename + ".jpg</a><br>");
+		}
+	};
+
+
+
+
+
 	var images = localStorage.getItem("images");
 	if(images != null){
 		var imagesArray = images.split("&&");

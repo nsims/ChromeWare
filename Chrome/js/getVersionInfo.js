@@ -3,143 +3,37 @@
 
 function initializeVersions(){
 	console.log("Should initialize...");
-	if(localStorage.getItem("Products") == null || localStorage.getItem("Products") == ""){
+	if(localStorage.getItem("objProducts") == null || localStorage.getItem("objProducts") == ""){
+	
 		console.log("initializing products...");
-		var products = [];
-		//AQS
-		localStorage.setItem("AQS 6.0", 343);
-		products.push("AQS 6.0");
-		localStorage.setItem("AQS 7.0", 282);
-		products.push("AQS 7.0");
-		localStorage.setItem("AQS 7.2", 539);
-		products.push("AQS 7.2");
-		localStorage.setItem("AQS 7.5", 603);
-		products.push("AQS 7.5");
+		var objProducts = {};
+		objProducts["AQS 6.0"] = 343;
+		objProducts["AQS 7.0"] = 282;
+		objProducts["AQS 7.2"] = 539;
+		objProducts["AQS 7.5"] = 603;
+		objProducts["AQS 7.6"] = 684;
+		objProducts["AQS 7.7"] = 772;
+		objProducts["AQS 7.8"] = 883;
+		objProducts["Waste 6.0"] = 351;
+		objProducts["Waste 7.2"] = 565;
+		objProducts["Waste 7.7"] = 769;
+		objProducts["Waste 7.8"] = 882;
+		objProducts["RCM 6.0"] = 344;
+		objProducts["RCM 7.0"] = 375;
+		objProducts["RCM 7.2"] = 535;
+		objProducts["RCM 7.5"] = 560;
+		objProducts["RCM 7.6"] = 562;
+		objProducts["RCM 7.7"] = 755;
+		objProducts["RCM 7.8"] = 791;
+		objProducts["ACS 6.0"] = 383;
+		objProducts["ACS 7.0"] = 414;
+		objProducts["ACS 7.2"] = 554;
+		objProducts["ACS 7.5"] = 561;
+		objProducts["ACS 7.7"] = 771;
+		objProducts["ACS 7.8"] = 870;
 		
-		//WMS
-		localStorage.setItem("Waste 6.0", 351);
-		products.push("Waste 6.0");
-		localStorage.setItem("Waste 7.0", 388);
-		products.push("Waste 7.0");
-		localStorage.setItem("Waste 7.2", 565);
-		products.push("Waste 7.2");
-		localStorage.setItem("Waste 7.5", 566);
-		products.push("Waste 7.5");
-		
-		//RCM
-		localStorage.setItem("RCM 6.0", 344);
-		products.push("RCM 6.0");
-		localStorage.setItem("RCM 7.0", 375);
-		products.push("RCM 7.0");
-		localStorage.setItem("RCM 7.2", 535);
-		products.push("RCM 7.2");
-		localStorage.setItem("RCM 7.5", 560);
-		products.push("RCM 7.5");
-		
-		//ACS
-		localStorage.setItem("ACS 6.0", 383);
-		products.push("ACS 6.0");
-		localStorage.setItem("ACS 7.0", 414);
-		products.push("ACS 7.0");
-		localStorage.setItem("ACS 7.2", 554);
-		products.push("ACS 7.2");
-		localStorage.setItem("ACS 7.5", 561);
-		products.push("ACS 7.5");
-		
-		//CMS
-		localStorage.setItem("CMS 6.0", 350);
-		products.push("CMS 6.0");
-		localStorage.setItem("CMS 7.0", 415);
-		products.push("CMS 7.0");
-		
-		//HO
-		localStorage.setItem("HO 7.0", 347);
-		products.push("HO 7.0");
-		localStorage.setItem("HO 7.2", 524);
-		products.push("HO 7.2");
-
-		//AutoDeliver 7.2
-		localStorage.setItem("AutoDeliver 7.2", 645);
-		products.push("AutoDeliver 7.2");
-		
-		localStorage.setItem("Products", products.join("&&"));
+		localStorage.setItem("objProducts", JSON.stringify(objProducts));
 	}
-}
-
-function applicationMapping(sAppId) {
-	switch(sAppId){
-		case "AQS 6.0":
-			var ret = 343;
-			break;
-		case "AQS 7.0":
-			var ret = 282;
-			break;
-		case "AQS 7.2":
-			var ret = 539;
-			break;
-		case "AQS 7.5":
-			var ret = 603;
-			break;
-		case "Waste 6.0":
-			var ret = 351;
-			break;
-		case "Waste 7.0":
-			var ret = 388;
-			break;
-		case "Waste 7.2":
-			var ret = 565;
-			break;
-		case "Waste 7.5":
-			var ret = 566;
-			break;
-		case "RCM 6.0":
-			var ret = 344;
-			break;
-		case "RCM 7.0":
-			var ret = 375;
-			break;
-		case "RCM 7.2":
-			var ret = 535;
-			break;
-		case "RCM 7.5":
-			var ret = 560;
-			break;
-		case "ACS 6.0":
-			var ret = 383;
-			break;
-		case "ACS 7.0":
-			var ret = 414;
-			break;
-		case "ACS 7.2":
-			var ret = 554;
-			break;
-		case "ACS 7.5":
-			var ret = 561;
-			break;
-		case "CMS 6.0":
-			var ret = 350;
-			break;
-		case "CMS 7.0":
-			var ret = 415;
-			break;
-		case "HO 7.0":
-			var ret = 347;
-			break;
-		case "HO 7.2":
-			var ret = 524;
-			break;
-		case "AutoDeliver 7.2":
-			var ret = 645;
-			break;
-		case "WizFrame 6.0":
-			var ret = 428;
-			break;
-		default:
-			var ret = null;
-			break;
-	};
-	return ret;
-
 }
 
 function mapAppIdToModuleName(appId) {
@@ -344,7 +238,8 @@ function getVersionInfo() {
 
 	var thisURL = null;
 
-	if(localStorage.getItem("CF-lastwindow") == "create-request"){
+	//We don't want to reload this everytime, only when needed
+	if(localStorage.getItem("CF-lastwindow") == "main" || localStorage.getItem("CW-release") == null){
 		chrome.tabs.query({active: true, currentWindow: true}, 
 			function(tabs){ 
 	                                

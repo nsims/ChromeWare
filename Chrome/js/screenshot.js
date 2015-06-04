@@ -13,10 +13,14 @@ function setScreenshotUrl(url) {
 */
 function takeScreenshot() {
   chrome.tabs.captureVisibleTab(null, function(img) {
+	var date = new Date();
     var screenshotUrl = img;
 	var viewTabUrl = chrome.extension.getURL('screenshot.html');
 	var filename = $("#filename").val();
+	var objImages = JSON.parse(localStorage.getItem("Images"));
 	
+	if(objImages == null)
+		objImages = {};
 	if(filename != ""){
 		var imgUrl = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');		
 		var link = document.createElement("a");
@@ -24,23 +28,15 @@ function takeScreenshot() {
 		//link.href = imgUrl;
 		link.href = img;
 		
-		var imagesString = localStorage.getItem("images");
-		if(imagesString != null){
-			var i = 2;
-			while(localStorage.getItem(filename) != null){
-				filename = filename + i;
-				i++
-			};
-			imagesString = imagesString + "&&" + filename;
-		}
-		else
-			imagesString = filename;
+		var imageVersion = 1;
+		while(objImages[filename] != null){
+			imageVersion++;
+			filename = filename + imageVersion;
+		};
+		objImages[filename] = img;
+		localStorage.setItem("Images", JSON.stringify(objImages));
 		
-		var imageArray = imagesString.split("&&");
-		
-		localStorage.setItem("images", imagesString);
-		localStorage.setItem(filename, img);
-		$("#details").append("<a class=\"screenshot\" target=\"_blank\" href=\"" + img + "\" name=" + filename + ">" + imageArray.length + ": " + filename + ".jpg</a><br class=\"screenshot\">");
+		$("#details").append("<a class=\"screenshot\" target=\"_blank\" href=\"" + img + "\" name=" + filename + ">" + Object.keys(objImages).length + ": " + filename + ".jpg</a><br class=\"screenshot\">");
 		//link.click();
 		index++;	
 	}
@@ -48,31 +44,23 @@ function takeScreenshot() {
 }
 
 function downloadScreenshots(){
-	var images = localStorage.getItem("images");
-	if(images != null){
-		var imagesArray = images.split("&&");
-		for(var i=0;i < imagesArray.length; i++){
-			var filename = imagesArray[i];
-			var img = localStorage.getItem(filename);
-			var link = document.createElement("a");
-			link.download = filename + ".jpg";
-			link.href = img;
-			link.click();
-		}
+	var objImages = JSON.parse(localStorage.getItem("Images"));
+	var images = objImages != null ? Object.keys(objImages) : objImages;
+	var inc;
+	for(inc in images){
+		var filename = images[inc];
+		var img = objImages[filename];
+		var link = document.createElement("a");
+		link.download = filename + ".jpg";
+		link.href = img;
+		link.click();
 	}
 }
 
 function clearScreenshots(){
-	var images = localStorage.getItem("images");
-	if(images != null){
-		var imagesArray = images.split("&&");
-		for(var i=0;i < imagesArray.length; i++){
-			var filename = imagesArray[i];
-			localStorage.removeItem(filename)			
-		};
-		localStorage.removeItem("images");
-	};
-	$("#details .screenshot").remove()
+	localStorage.removeItem("Images");
+	console.log("removing images");
+	$("#details").children().remove();
 }
 
 
@@ -83,5 +71,5 @@ function clearScreenshots(){
 */
 function clickHandler(e){	
 
-	setTimeout(takeScreenshot, 1000);
+	setTimeout(takeScreenshot, 100);
 }

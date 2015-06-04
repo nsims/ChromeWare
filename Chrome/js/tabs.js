@@ -69,20 +69,6 @@ function injectJavaScript() {
 		if(url.indexOf("enablon") > 0){
 			//We clear the request form
 			clearRequestAfterCreation();
-			
-			//Inject the scripts
-			// if (tab.url.indexOf("chrome-devtools://") == -1) {
-				// localStorage.setItem("tabid", tab.id);
-				// chrome.tabs.executeScript(tab.id, {code: "localStorage.setItem('image', '" + localStorage.getItem("image") + "');console.log('image:' + localStorage.getItem('image'))"}, function() {
-					// if (chrome.runtime.lastError) {
-						// localStorage.setItem("Error", chrome.runtime.lastError.message);
-						// console.error(chrome.runtime.lastError.message);
-					// }
-					// else{
-						// localStorage.setItem("Else case", "This should work")
-					// }
-				// });
-			// }
 		}
 	});
 	
@@ -164,6 +150,7 @@ function createRequest() {
 				cache: false,
 				success: function(data, textStatus, jqXHR){ //If call is successful
 					localStorage.setItem("Please work", "It Does!");
+					var objProducts = JSON.parse(localStorage.getItem("objProducts"));
 					//Grab the id's from the page
 					var productId = $('#nGetProduct', data).text();
 					var productBuildId = $('#nGetProductBuild', data).text();
@@ -171,18 +158,11 @@ function createRequest() {
 					
 					//If we can get the product id, we go into the folder
 					if(productId.trim() != ""){
-						var newURL = 	reqUrl + 
+						var newURL = 	getURLPath("newRequestParams", 
+										reqUrl + 
 										"&fid=" + productId + 
 										"&Fld__xml_BuildProduct=" + productBuildId + 
-										"&Fld__xml_BuildSocle=" + socleBuildId;
-
-						if(localStorage.getItem("CW-urlParams") == "yes"){
-							console.log("Params test1");
-							newURL = 	getURLPath("newRequestParams", newURL);
-						}
-						else{
-							newURL = 	newURL + "&ext=1";
-						}
+										"&Fld__xml_BuildSocle=" + socleBuildId);
 
 					}
 					//Otherwise we create the request outside the folder
@@ -192,21 +172,17 @@ function createRequest() {
 						localStorage.setItem("CW-appBuild", $("#build").text());
 						localStorage.setItem("CW-asBuild", $("#asbuild").text());
 
-						//Retrive the hardcoded id from getVersionInfo.js file
-						//var nAppId = applicationMapping(sAppId);
-                        var nAppId = localStorage.getItem(sAppId);
+						//Retrive the id from the JSON object stored in localStorage
+                        var nAppId = objProducts[sAppId];
+						
 						if(nAppId == null){
 
 							//If we still don't have an id, just create a regular request and and save the application info
-							var newURL = newReqUrl;
-							newURL = getURLPath("newRequestParams", newURL);
-							if(sAppId != null){
-								localStorage.setItem("CW-appVersion", sAppId);
-							}
+							var newURL = getURLPath("newRequestParams", newURL);
+							localStorage.setItem("CW-appVersion", sAppId);
 						}
 						else{
-							var newURL = reqUrl + "&fid=" + nAppId;
-				            newURL = getURLPath("newRequestParams", newURL);
+							var newURL = getURLPath("newRequestParams", reqUrl + "&fid=" + nAppId);
 						};
 					}
 					
